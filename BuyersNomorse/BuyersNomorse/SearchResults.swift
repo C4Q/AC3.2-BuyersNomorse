@@ -78,5 +78,4 @@ class SearchResults {
         
         return searchResults
     }
-    
 }
