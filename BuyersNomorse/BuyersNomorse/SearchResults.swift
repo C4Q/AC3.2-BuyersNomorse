@@ -76,7 +76,6 @@ class SearchResult {
             print(error)
         }
         
-        
         return searchResults
     }
     
