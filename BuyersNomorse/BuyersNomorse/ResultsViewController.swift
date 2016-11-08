@@ -15,27 +15,29 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     var minPrice: String?
     var maxPrice: String?
+    var searchedItem = ""
     
-    let APIEndPoint1 = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=Madushan-GroupPro-PRD-4bff3fe44-23206160"
-    let minPriceKey2 = "&itemFilter(0).name=MaxPrice&itemFilter(0).value="
-    let maxPriceKey3 = "&itemFilter(1).name=MinPrice&itemFilter(1).value="
-    let APIEndP4 = "&paginationInput.entriesPerPage=25"
-    let keyWordsKey5 = "&keywords="
-    let APIEndP6 = "&RESPONSE-DATA-FORMAT=JSON"
+    func constructEndpoint(keyword: String, minPrice: String?, maxPrice: String?) -> String {
+        let keywordInput = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        
+        var endpoint = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=\(keywordInput)"
+        
+        if let maxPriceEntered = maxPrice {
+            endpoint += "&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(maxPriceEntered)"
+        }
+        
+        if let minPriceEntered = minPrice {
+            endpoint += "&itemFilter(1).name=MinPrice&itemFilter(1).value=\(minPriceEntered)"
+        }
+        
+        return endpoint
+    }
     
-    var searchedItem: String?
     var itemSelected: SearchResults?
     var items: [SearchResults]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func minPriceChanged(_ sender: UITextField) {
