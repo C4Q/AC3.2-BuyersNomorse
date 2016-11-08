@@ -15,7 +15,7 @@ enum searchResultParseError: Error {
     case getResults
 }
 
-class SearchResult {
+class SearchResults {
     let title: String
     let galleryUrl: String
     let viewItemUrl: String
@@ -32,8 +32,8 @@ class SearchResult {
         self.categoryName = categoryName
     }
     
-    static func getDataFromJson(data: Data) -> [SearchResult]? {
-        var searchResults = [SearchResult]()
+    static func getDataFromJson(data: Data) -> [SearchResults]? {
+        var searchResults = [SearchResults]()
         
         do {
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
@@ -65,7 +65,7 @@ class SearchResult {
                     let currentPrice = convertedPrice[0]["__value__"]
                     else { throw searchResultParseError.getResults }
                 
-                let sr = SearchResult(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
+                let sr = SearchResults(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
                 searchResults.append(sr)
             }
         } catch searchResultParseError.jsonSerialization {
