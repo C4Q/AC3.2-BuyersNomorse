@@ -24,8 +24,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     let APIEndP6 = "&RESPONSE-DATA-FORMAT=JSON"
     
     var searchedItem: String?
-    var itemSelected: SearchedItems?
-    var items: [SearchedItems]?
+    var itemSelected: SearchResults?
+    var items: [SearchResults]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
