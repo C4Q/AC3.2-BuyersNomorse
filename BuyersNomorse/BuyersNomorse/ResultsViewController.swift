@@ -16,9 +16,16 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var minPrice: String?
     var maxPrice: String?
     
-    let APIEndPoint = ""
+    let APIEndPoint1 = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=Madushan-GroupPro-PRD-4bff3fe44-23206160"
+    let minPriceKey2 = "&itemFilter(0).name=MaxPrice&itemFilter(0).value="
+    let maxPriceKey3 = "&itemFilter(1).name=MinPrice&itemFilter(1).value="
+    let APIEndP4 = "&paginationInput.entriesPerPage=25"
+    let keyWordsKey5 = "&keywords="
+    let APIEndP6 = "&RESPONSE-DATA-FORMAT=JSON"
     
     var searchedItem: String?
+    var itemSelected: SearchedItems?
+    var items: [SearchedItems]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,15 +55,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
  
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+ 
 
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -71,37 +70,30 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! ResultsTableViewCell
 //        let critic = critics[indexPath.row]
 //        cell.criticNameLabel.text = critic.name
-//        
-//        if let existingImage = critic.image {
-//            APIRequestManager.manager.getData(endpoint: (existingImage.link)) { (data: Data?) in
-//                if  let validData = data,
-//                    let validImage = UIImage(data: validData) {
-//                    DispatchQueue.main.async {
-//                        cell.criticImage.image = validImage
-//                        cell.criticImage.isHidden = false
-//                        cell.setNeedsLayout()
-//                    }
-//                }
-//            }
-//        } else {
-//            cell.criticImage.isHidden = true
-//        }
+      //  cell.textLabel?.text = "Hello"
+
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let criticSelected = critics[indexPath.row].name
-//        let name = criticSelected.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-//        
-//        APIRequestManager.manager.getData(endpoint: Review.endpoint + "&reviewer=\(name)") { (data) in
-//            if let validData = data {
-//                self.reviews = Review.getDataFromJSON(data: validData)!
-//            }
-//            DispatchQueue.main.async{
-//                self.collectionView?.reloadData()
-//            }
-//        }
-//    }
-//    
-//    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        itemSelected = self.items?[indexPath.row]
+        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: itemSelected)
+    }
+    
+
+    
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "SegueToAlternativeViewController" {
+            if let destinationVC = segue.destination as? AlternativeChoicesViewController {
+                destinationVC.customerSelection = itemSelected
+            }
+            
+        }
+     }
+    
+   
 }

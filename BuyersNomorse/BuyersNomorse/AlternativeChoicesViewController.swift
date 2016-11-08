@@ -13,6 +13,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
     
+    var customerSelection: SearchedItems?
     
     
     override func viewDidLoad() {

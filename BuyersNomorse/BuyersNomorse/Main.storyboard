@@ -135,6 +135,7 @@
                     <connections>
                         <outlet property="maxPriceTextField" destination="fQy-cJ-83k" id="ZfC-RG-owB"/>
                         <outlet property="minPriceTextField" destination="6KB-Yu-o8C" id="7lG-Ng-U56"/>
+                        <segue destination="fH0-OC-dWm" kind="show" identifier="SegueToAlternativeViewController" id="tsw-Bd-orn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NpV-qD-nKx" userLabel="First Responder" sceneMemberID="firstResponder"/>
