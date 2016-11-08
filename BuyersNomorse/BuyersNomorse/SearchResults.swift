@@ -12,7 +12,7 @@ import Foundation
 
 enum searchResultParseError: Error {
     case jsonSerialization
-    case name
+    case getResults
 }
 
 class SearchResult {
@@ -35,62 +35,47 @@ class SearchResult {
     static func getDataFromJson(data: Data) -> [SearchResult]? {
         var searchResults = [SearchResult]()
         
-        //        do {
-        let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
-        guard let response = jsonData as? [String: Any],
-            let findItemsAdvancedResponse = response["findItemsAdvancedResponse"] as? [[String: Any]],
-            let theResults = findItemsAdvancedResponse[0]["searchResult"] as? [[String:Any]],
-            let item = theResults[0]["item"] as? [[String: Any]]
-            else {
-                return nil
-        }
-        
-        for itemObject in item {
-            guard let titleArr = itemObject["title"] as? [String],
-                let title = titleArr[0] as? String,
-                let primaryCategory = itemObject["primaryCategory"] as? [[String: Any]],
-                let categoryIdArr = primaryCategory[0]["categoryId"] as? [String],
-                let categoryId = categoryIdArr[0] as? String,
-                let categoryNameArr = primaryCategory[0]["categoryName"] as? [String],
-                let categoryName = categoryNameArr[0] as? String
+        do {
+            let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
+            guard let response = jsonData as? [String: Any],
+                let findItemsAdvancedResponse = response["findItemsAdvancedResponse"] as? [[String: Any]],
+                let theResults = findItemsAdvancedResponse[0]["searchResult"] as? [[String:Any]],
+                let item = theResults[0]["item"] as? [[String: Any]]
+                else { throw searchResultParseError.jsonSerialization }
+            
+            for itemObject in item {
+                guard let titleArr = itemObject["title"] as? [String],
+                    let title = titleArr[0] as? String,
+                    
+                    let primaryCategory = itemObject["primaryCategory"] as? [[String: Any]],
+                    let categoryIdArr = primaryCategory[0]["categoryId"] as? [String],
+                    let categoryId = categoryIdArr[0] as? String,
+                    
+                    let categoryNameArr = primaryCategory[0]["categoryName"] as? [String],
+                    let categoryName = categoryNameArr[0] as? String,
+                    
+                    let galleryUrlArr = itemObject["galleryURL"] as? [String],
+                    let galleryUrl = galleryUrlArr[0] as? String,
+                    
+                    let viewItemURLArr = itemObject["viewItemURL"] as? [String],
+                    let viewItemUrl = viewItemURLArr[0] as? String,
+                    
+                    let sellingStatus = itemObject["sellingStatus"] as? [[String:Any]],
+                    let convertedPrice = sellingStatus[0]["convertedCurrentPrice"] as? [[String:String]],
+                    let currentPrice = convertedPrice[0]["__value__"]
+                    else { throw searchResultParseError.getResults }
                 
-                else {
-                    return nil
+                let sr = SearchResult(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
+                searchResults.append(sr)
             }
+        } catch searchResultParseError.jsonSerialization {
+            print("jsonSerialization error")
+        }catch searchResultParseError.getResults {
+            print("get results parsing error")
+        }catch {
+            print(error)
         }
         
-        //
-        //            for criticObject in results {
-        //                guard let criticName = criticObject["display_name"] as? String else {
-        //                    throw CriticModelParseError.name
-        //                }
-        //
-        //                var bio: String? = nil
-        //
-        //                if let biograpgy = criticObject["bio"] as? String {
-        //                    bio = biograpgy
-        //                }
-        //
-        //                var image: Image? = nil
-        //
-        //                if let multimedia = criticObject["multimedia"] as? [String: AnyObject],
-        //                    let resource = multimedia["resource"] as? [String: AnyObject] {
-        //                    image = Image(from: resource)
-        //                }
-        //
-        //                let c = Critic(name: criticName,
-        //                               image: image,
-        //                               bio: bio)
-        //                critics.append(c)
-        //            }
-        //
-        //        } catch CriticModelParseError.jsonSerialization {
-        //            print("jsonSerialization error")
-        //        } catch CriticModelParseError.name {
-        //            print("name error")
-        //        } catch {
-        //            print(error)
-        //        }
         
         return searchResults
     }
