@@ -9,11 +9,12 @@
 import UIKit
 
 class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var minPriceTextField: UITextField!
     @IBOutlet weak var maxPriceTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var errorLabel: UILabel!
     var minPrice: String?
     var maxPrice: String?
     var searchedItem = ""
@@ -57,38 +58,63 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return endpoint
     }
     
- 
+    
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
     }
-
+    
+    func isMinMaxFieldCheckPassed() -> Bool {
+        var check = false
+        //couldn't find a way to cast as a double
+        if let minString = minPriceTextField.text, let maxString = maxPriceTextField.text {
+            if Int(minString)! < Int(maxString)! {
+                check = true
+            }
+            else {
+                check = false
+            }
+        }
+        return check
+    }
+    
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        if minPriceTextField.text! != "" {
-            guard let minNum = Double(minPriceTextField.text!)
-                else {
-                    print("minPrice field is not a num: \(minPriceTextField.text!)")
-                    return
+        
+        if isMinMaxFieldCheckPassed() {
+            
+            errorLabel.isHidden = true
+            
+            if minPriceTextField.text! != "" {
+                guard let minNum = Double(minPriceTextField.text!)
+                    else {
+                        print("minPrice field is not a num: \(minPriceTextField.text!)")
+                        return
                 }
-            minPrice = String(minNum)
-        }
-        
-        if maxPriceTextField.text! != "" {
-            guard let maxNum = Double(maxPriceTextField.text!)
-                else {
-                    print("maxPrice field is not a num: \(maxPriceTextField.text!)")
-                    return
+                minPrice = String(minNum)
+            }
+            
+            if maxPriceTextField.text! != "" {
+                guard let maxNum = Double(maxPriceTextField.text!)
+                    else {
+                        print("maxPrice field is not a num: \(maxPriceTextField.text!)")
+                        return
                 }
-            maxPrice = String(maxNum)
+                maxPrice = String(maxNum)
+            }
+            
+            print("min price is \(minPrice)")
+            print("max price is \(maxPrice)")
         }
-        
-        print("min price is \(minPrice)")
-        print("max price is \(maxPrice)")
-        
+            
+        else {
+            errorLabel.isHidden = false
+            errorLabel.text = "Minimum should be less than Maximum"
+        }
         // Need to figure out how to guard min price < max price
         // Need to update tableview to new prices
     }
- 
+    
     // MARK: - TABLEVIEW
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -115,13 +141,12 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         itemSelected = self.items?[indexPath.row]
         performSegue(withIdentifier: "SegueToAlternativeViewController", sender: itemSelected)
     }
-
-
     
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SegueToAlternativeViewController" {
             if let destinationVC = segue.destination as? AlternativeChoicesViewController {
@@ -129,7 +154,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             }
             
         }
-     }
+    }
     
-   
+    
 }
