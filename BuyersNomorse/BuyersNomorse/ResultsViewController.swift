@@ -80,9 +80,12 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         var minPDouble: Double?
         var maxPDouble: Double?
         
+        minPrice = nil
+        maxPrice = nil
+        
         if minPriceTextField.text! != "" {
             guard let minNum = Double(minPriceTextField.text!) else {
-                print("minPrice field is not a num: \(minPriceTextField.text!)")
+                //print("minPrice field is not a num: \(minPriceTextField.text!)")
                 errorLabel.text = "The minimum price is not a valid answer"
                 return false
             }
@@ -92,7 +95,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if maxPriceTextField.text! != "" {
             guard let maxNum = Double(maxPriceTextField.text!) else {
-                print("maxPrice field is not a num: \(maxPriceTextField.text!)")
+                //print("maxPrice field is not a num: \(maxPriceTextField.text!)")
                 errorLabel.text = "The maximum price is not a valid answer"
                 return false
             }
@@ -108,14 +111,14 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         
         print("min price is \(minPrice)")
-        print("max price is \(maxPrice)")
+        print("MAX price is \(maxPrice)")
         return true
     }
 
 
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        print("Min price textfield is showing \(dump(minPriceTextField))")
-        print("Max price textfield is showing \(dump(maxPriceTextField))")
+        print("min price textfield is showing \(minPriceTextField.text)")
+        print("MAX price textfield is showing \(maxPriceTextField.text)")
         
         guard minMaxAreAcceptableAnswers() else {
             errorLabel.isHidden = false
@@ -132,10 +135,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                     http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=wor&itemFilter(0).name=MaxPrice&itemFilter(0).value=30.0&itemFilter(1).name=MinPrice&itemFilter(1).value=20.0
         */
         
-
-//  Thinking of resetting to nil... seems like when I set a max and min, and then take away a value, the max value still stays
-//        minPrice = nil
-//        maxPrice = nil
     }
     
     // MARK: - TABLEVIEW
@@ -174,7 +173,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             if let destinationVC = segue.destination as? AlternativeChoicesViewController {
                 destinationVC.customerSelection = itemSelected
             }
-            
         }
     }
     
