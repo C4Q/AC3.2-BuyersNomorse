@@ -12,22 +12,39 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
 
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
-    var customerSelection: SearchResults?
+    var customerSelection: SearchResults!
+    var alternativeItems: [SearchResults]?
+    var alternativeEndpoint: String {
+        return constructAlternativeEndpoint()
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        itemNameLabel.text = customerSelection.title
 
-        // Do any additional setup after loading the view.
+        APIRequestManager.manager.getData(endPoint: alternativeEndpoint) { (data: Data?) in
+            if  let validData = data {
+                self.alternativeItems = SearchResults.getDataFromJson(data: validData)
+            }
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func constructAlternativeEndpoint() -> String {
+        let randomNum = arc4random_uniform(1000)+1
+        let randomCategoryNum = String(randomNum)
+        let price = self.customerSelection.currentPrice
+        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
     }
+
     
-
+    
+    
     /*
     // MARK: - Navigation
 
@@ -45,33 +62,28 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 //reviews.count
+        guard let alternativeItemsExists = alternativeItems else { return 0 }
+        return alternativeItemsExists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlternativeChoice", for: indexPath) as! AlternativeChoicesCollectionViewCell
-//        let review = reviews[indexPath.row]
-//        cell.movieTitleLabel.text = review.movie
-//        
-//        if let existingImage = review.image {
-//            APIRequestManager.manager.getData(endpoint: (existingImage.link)) { (data: Data?) in
-//                if  let validData = data,
-//                    let validImage = UIImage(data: validData) {
-//                    DispatchQueue.main.async {
-//                        cell.reviewImage.image = validImage
-//                        cell.reviewImage.isHidden = false
-//                        cell.setNeedsLayout()
-//                    }
-//                }
-//            }
-//        } else {
-//            cell.reviewImage.isHidden = true
-//        }
-//        
-//        cell.movieTitleLabel.isHidden = !cell.reviewImage.isHidden
+        
+        guard let alternativeItemsExists = alternativeItems else { return cell }
+        let item = alternativeItemsExists[indexPath.row]
+        
+        APIRequestManager.manager.getData(endPoint: item.galleryUrl) { (data: Data?) in
+            if  let validData = data,
+                let validImage = UIImage(data: validData) {
+                DispatchQueue.main.async {
+                    cell.alternativeItemImageView.image = validImage
+                    cell.setNeedsLayout()
+                }
+            }
+        }
         
         return cell
     }
-
+    
 
 }

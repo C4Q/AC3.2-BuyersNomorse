@@ -8,8 +8,6 @@
 
 import Foundation
 
-// http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&itemFilter(0).name=MaxPrice&itemFilter(0).value=7.50&itemFilter(1).name=MinPrice&itemFilter(1).value=7.50&paginationInput.entriesPerPage=10&categoryId=1281&keywords=cheap&RESPONSE-DATA-FORMAT=JSON
-
 enum searchResultParseError: Error {
     case jsonSerialization
     case getResults
@@ -44,20 +42,20 @@ class SearchResults {
                 else { throw searchResultParseError.jsonSerialization }
             
             for itemObject in item {
-                guard let titleArr = itemObject["title"] as? [String],
+                guard let titleArr = itemObject["title"] as? [Any],
                     let title = titleArr[0] as? String,
                     
                     let primaryCategory = itemObject["primaryCategory"] as? [[String: Any]],
-                    let categoryIdArr = primaryCategory[0]["categoryId"] as? [String],
+                    let categoryIdArr = primaryCategory[0]["categoryId"] as? [Any],
                     let categoryId = categoryIdArr[0] as? String,
                     
-                    let categoryNameArr = primaryCategory[0]["categoryName"] as? [String],
+                    let categoryNameArr = primaryCategory[0]["categoryName"] as? [Any],
                     let categoryName = categoryNameArr[0] as? String,
                     
-                    let galleryUrlArr = itemObject["galleryURL"] as? [String],
+                    let galleryUrlArr = itemObject["galleryURL"] as? [Any],
                     let galleryUrl = galleryUrlArr[0] as? String,
                     
-                    let viewItemURLArr = itemObject["viewItemURL"] as? [String],
+                    let viewItemURLArr = itemObject["viewItemURL"] as? [Any],
                     let viewItemUrl = viewItemURLArr[0] as? String,
                     
                     let sellingStatus = itemObject["sellingStatus"] as? [[String:Any]],
