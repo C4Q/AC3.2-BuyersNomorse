@@ -18,10 +18,7 @@ fileprivate func randomCatogoryGenerator() -> String {
 import UIKit
 
 class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    let mytuple = [("hello", "world"),("h", "hkjhjh")]
-    
-    
+
     
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
@@ -38,10 +35,11 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         
         /* maybe make enums for these category nums: http://www.isoldwhat.com/getcats/ */
         
-        let randomNum = arc4random_uniform(1000)+1
-        let randomCategoryNum = String(randomNum)
+//        let randomNum = arc4random_uniform(1000)+1
+//        let randomCategoryNum = String(randomNum)
+        let randomCategory = randomCatogoryGenerator()
         let price = self.customerSelection.currentPrice
-        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
+        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategory)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
     }
     
     override func viewDidLoad() {
