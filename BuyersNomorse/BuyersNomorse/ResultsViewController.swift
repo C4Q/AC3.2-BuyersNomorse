@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+
+
+
+
 class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var minPriceTextField: UITextField!
@@ -35,6 +40,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     var itemSelected: SearchResults?
     var items: [SearchResults]?
+    // var sortedItems: [SearchResults]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +50,18 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
             if  let validData = data {
-                self.items = SearchResults.getDataFromJson(data: validData)
+                let unsortedItems = SearchResults.getDataFromJson(data: validData)
+                self.items = unsortedItems?.sorted { (a, b) -> Bool in
+                    
+                    var isSmaller = false
+                    let aPrice: Double? = Double(a.currentPrice)
+                    let bPrice: Double? = Double(b.currentPrice)
+                    
+                    if let aP = aPrice, let bP = bPrice {
+                        isSmaller = aP < bP
+                    }
+                    return isSmaller
+                }
             }
             DispatchQueue.main.async {
                 self.tableView?.reloadData()
@@ -56,27 +73,40 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
     }
+    //    func sortItems(arrItems: [SearchResults]) -> [SearchResults] {
+    //
+    ////        for i in 0..<arrItems.count {
+    ////            if arrItems[i]
+    ////        }t
+    //        var newArray = arrItems.sorted { (a, b) -> Bool in
+    //            Int(a.currentPrice)! < Int(b.currentPrice)!
+    //        }
+    //
+    //        return newArray
+    //    }
+    
+    
     
     /*
      Int(minString)! and Int(maxString)! can cause an error
      when user enters something other than a number, or an empty string.
      Need to guard against those cases first
-        -Also, should we allow for it to search if only one number is entered? (ex. max  is 10, min is not entered)
+     -Also, should we allow for it to search if only one number is entered? (ex. max  is 10, min is not entered)
      */
     
-//    func isMinMaxFieldCheckPassed() -> Bool {
-//        var check = false
-//        //couldn't find a way to cast as a double
-//        if let minString = minPriceTextField.text, let maxString = maxPriceTextField.text {
-//            if Int(minString)! < Int(maxString)! {
-//                check = true
-//            }
-//            else {
-//                check = false
-//            }
-//        }
-//        return check
-//    }
+    //    func isMinMaxFieldCheckPassed() -> Bool {
+    //        var check = false
+    //        //couldn't find a way to cast as a double
+    //        if let minString = minPriceTextField.text, let maxString = maxPriceTextField.text {
+    //            if Int(minString)! < Int(maxString)! {
+    //                check = true
+    //            }
+    //            else {
+    //                check = false
+    //            }
+    //        }
+    //        return check
+    //    }
     
     func minMaxAreAcceptableAnswers() -> Bool {
         var minPDouble: Double?
@@ -104,7 +134,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             maxPDouble = maxNum
             maxPrice = String(maxNum)
         }
-
+        
         if let minExists = minPDouble, let maxExists = maxPDouble {
             guard minExists < maxExists else {
                 errorLabel.text = "Minimum should be less than Maximum"
@@ -116,8 +146,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         print("MAX price is \(maxPrice)")
         return true
     }
-
-
+    
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         print("min price textfield is showing \(minPriceTextField.text)")
         print("MAX price textfield is showing \(maxPriceTextField.text)")
@@ -131,11 +161,11 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
         
         /* The error appears in that min price can't be entered without a max price
-            -Can we do any JSON manipulation so that we can do this?
-            -Otherwise, we'll need to change code, where we only accept if both min and max are enetered
-            -JSON parsing error for one example I tried - update SearchResults.swift to be more robust-
-                    http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=wor&itemFilter(0).name=MaxPrice&itemFilter(0).value=30.0&itemFilter(1).name=MinPrice&itemFilter(1).value=20.0
-        */
+         -Can we do any JSON manipulation so that we can do this?
+         -Otherwise, we'll need to change code, where we only accept if both min and max are enetered
+         -JSON parsing error for one example I tried - update SearchResults.swift to be more robust-
+         http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=wor&itemFilter(0).name=MaxPrice&itemFilter(0).value=30.0&itemFilter(1).name=MinPrice&itemFilter(1).value=20.0
+         */
         
     }
     
@@ -182,11 +212,11 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             if let cell = sender as? ResultsTableViewCell {
                 if let destinationVC = segue.destination as? AlternativeChoicesViewController {
                     if let indexPath = self.tableView.indexPath(for: cell) {
-                    itemSelected = self.items?[indexPath.row]
-                    destinationVC.customerSelection = itemSelected
-                    print("*************************")
-                    print(itemSelected)
-                    print("*************************")
+                        itemSelected = self.items?[indexPath.row]
+                        destinationVC.customerSelection = itemSelected
+                        print("*************************")
+                        print(itemSelected)
+                        print("*************************")
                     }
                 }
             }

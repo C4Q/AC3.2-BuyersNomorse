@@ -10,7 +10,7 @@ fileprivate let catagories = [("antiques", "20081"), ("art","550"), ("baby","298
 
 
 fileprivate func randomCatogoryGenerator() -> String {
-    let rand = Int(arc4random_uniform(35))
+    let rand = Int(arc4random_uniform(34))
     return catagories[rand].1
 }
 
