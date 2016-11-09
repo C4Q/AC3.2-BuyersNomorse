@@ -20,13 +20,15 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var searchedItem = ""
     
     var endpoint: String {
+        var filterCount = 0
         let keywordInput = self.searchedItem.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         var webAddress = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=\(keywordInput)"
         if let maxPriceEntered = self.maxPrice {
-            webAddress += "&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(maxPriceEntered)"
+            webAddress += "&itemFilter(\(filterCount)).name=MaxPrice&itemFilter(\(filterCount)).value=\(maxPriceEntered)"
+            filterCount += 1
         }
         if let minPriceEntered = self.minPrice {
-            webAddress += "&itemFilter(1).name=MinPrice&itemFilter(1).value=\(minPriceEntered)"
+            webAddress += "&itemFilter(\(filterCount)).name=MinPrice&itemFilter(\(filterCount)).value=\(minPriceEntered)"
         }
         return webAddress
     }
@@ -158,20 +160,32 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         cell.detailTextLabel?.text = item.currentPrice
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        itemSelected = self.items?[indexPath.row]
-        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: itemSelected)
-    }
-    
+//    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        print("At this point, self.items is this:")
+//        print(self.items)
+//        itemSelected = self.items?[indexPath.row]
+//        print("At this point, itemSelected is \(itemSelected)")
+//        print("It should be the same as \(self.items?[indexPath.row])")
+//        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: ResultsTableViewCell.self)
+//    }
+//    
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SegueToAlternativeViewController" {
-            if let destinationVC = segue.destination as? AlternativeChoicesViewController {
-                destinationVC.customerSelection = itemSelected
+            if let cell = sender as? ResultsTableViewCell {
+                if let destinationVC = segue.destination as? AlternativeChoicesViewController {
+                    if let indexPath = self.tableView.indexPath(for: cell) {
+                    itemSelected = self.items?[indexPath.row]
+                    destinationVC.customerSelection = itemSelected
+                    print("*************************")
+                    print(itemSelected)
+                    print("*************************")
+                    }
+                }
             }
         }
     }
