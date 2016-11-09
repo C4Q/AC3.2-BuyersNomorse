@@ -15,13 +15,13 @@ enum searchResultParseError: Error {
 
 class SearchResults {
     let title: String
-    let galleryUrl: String
+    let galleryUrl: String?
     let viewItemUrl: String
     let currentPrice: String
     let categoryId: String
     let categoryName: String
     
-    init(title: String, galleryUrl: String, viewItemUrl: String, currentPrice: String, categoryId: String, categoryName: String) {
+    init(title: String, galleryUrl: String?, viewItemUrl: String, currentPrice: String, categoryId: String, categoryName: String) {
         self.title = title
         self.galleryUrl = galleryUrl
         self.viewItemUrl = viewItemUrl
@@ -52,8 +52,7 @@ class SearchResults {
                     let categoryNameArr = primaryCategory[0]["categoryName"] as? [Any],
                     let categoryName = categoryNameArr[0] as? String,
                     
-                    let galleryUrlArr = itemObject["galleryURL"] as? [Any],
-                    let galleryUrl = galleryUrlArr[0] as? String,
+
                     
                     let viewItemURLArr = itemObject["viewItemURL"] as? [Any],
                     let viewItemUrl = viewItemURLArr[0] as? String,
@@ -61,7 +60,14 @@ class SearchResults {
                     let sellingStatus = itemObject["sellingStatus"] as? [[String:Any]],
                     let convertedPrice = sellingStatus[0]["convertedCurrentPrice"] as? [[String:String]],
                     let currentPrice = convertedPrice[0]["__value__"]
+                    
                     else { throw searchResultParseError.getResults }
+                
+                var galleryUrl: String?
+                
+                if let galleryUrlArr = itemObject["galleryURL"] as? [Any] {
+                    galleryUrl = galleryUrlArr[0] as? String
+                }
                 
                 let sr = SearchResults(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
                 searchResults.append(sr)

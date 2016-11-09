@@ -17,7 +17,10 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     var customerSelection: SearchResults!
     var alternativeItems: [SearchResults]?
     var alternativeEndpoint: String {
-        return constructAlternativeEndpoint()
+        let randomNum = arc4random_uniform(1000)+1
+        let randomCategoryNum = String(randomNum)
+        let price = self.customerSelection.currentPrice
+        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
     }
     
     override func viewDidLoad() {
@@ -32,33 +35,14 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
                 self.collectionView?.reloadData()
             }
         }
+        print("The alternative endpoint is currently \(self.alternativeEndpoint)")
     }
-
-    func constructAlternativeEndpoint() -> String {
-        let randomNum = arc4random_uniform(1000)+1
-        let randomCategoryNum = String(randomNum)
-        let price = self.customerSelection.currentPrice
-        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
-    }
-
     
-    
-    
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
+ 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let alternativeItemsExists = alternativeItems else { return 0 }
@@ -71,17 +55,18 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         guard let alternativeItemsExists = alternativeItems else { return cell }
         let item = alternativeItemsExists[indexPath.row]
         
-        APIRequestManager.manager.getData(endPoint: item.galleryUrl) { (data: Data?) in
-            if  let validData = data,
-                let validImage = UIImage(data: validData) {
-                DispatchQueue.main.async {
-                    cell.alternativeItemImageView.image = validImage
-                    cell.setNeedsLayout()
+        if let image = item.galleryUrl {
+            APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
+                if  let validData = data,
+                    let validImage = UIImage(data: validData) {
+                    DispatchQueue.main.async {
+                        cell.alternativeItemImageView.image = validImage
+                        cell.setNeedsLayout()
+                    }
                 }
             }
         }
         return cell
     }
-    
 
 }

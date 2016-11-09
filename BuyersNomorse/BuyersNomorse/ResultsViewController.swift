@@ -50,19 +50,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
     }
     
-//    func constructEndpoint() -> String {
-//        let keywordInput = self.searchedItem.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-//        var webAddress = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=\(keywordInput)"
-//        if let maxPriceEntered = self.maxPrice {
-//            webAddress += "&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(maxPriceEntered)"
-//        }
-//        if let minPriceEntered = self.minPrice {
-//            webAddress += "&itemFilter(1).name=MinPrice&itemFilter(1).value=\(minPriceEntered)"
-//        }
-//        return webAddress
-//    }
-    
-    
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
@@ -136,6 +123,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         errorLabel.isHidden = true
         print("The endpoint is currently \(self.endpoint)")
+        loadData()
         
         /* The error appears in that min price can't be entered without a max price
             -Can we do any JSON manipulation so that we can do this?
@@ -143,9 +131,9 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             -JSON parsing error for one example I tried - update SearchResults.swift to be more robust-
                     http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=wor&itemFilter(0).name=MaxPrice&itemFilter(0).value=30.0&itemFilter(1).name=MinPrice&itemFilter(1).value=20.0
         */
-        loadData()
         
-//     Thinking of resetting to nil... seems like when I set a max and min, and then take away a value, the max value still stays
+
+//  Thinking of resetting to nil... seems like when I set a max and min, and then take away a value, the max value still stays
 //        minPrice = nil
 //        maxPrice = nil
     }
@@ -166,7 +154,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         guard let itemsExists = items else { return cell }
         let item = itemsExists[indexPath.row]
         
-        // Temporary, need to update a custom ResultsTableViewCell, images and stuff
+        /* Temporary, need to update a custom ResultsTableViewCell, images and stuff */
         cell.textLabel?.text = item.title
         cell.detailTextLabel?.text = item.currentPrice
         return cell
@@ -180,7 +168,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SegueToAlternativeViewController" {
