@@ -227,10 +227,6 @@
                                     <outlet property="delegate" destination="fH0-OC-dWm" id="FbC-vt-aTs"/>
                                 </connections>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cAe-aJ-dHJ">
-                                <frame key="frameInset" minX="112" minY="153" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Item Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ZrL-Hc-MSd">
                                 <frame key="frameInset" minX="16" minY="72" width="343" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -245,13 +241,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT4-wp-Gu7">
+                                <frame key="frameInset" minX="112" minY="141" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="alternativeImageTapped:" destination="fH0-OC-dWm" eventType="touchUpInside" id="I84-Xj-yMq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="alternativeItemsHeader" destination="wwg-tD-bo2" id="lPK-Dp-TaB"/>
                         <outlet property="collectionView" destination="mkt-Io-aeE" id="wKv-dR-P0u"/>
-                        <outlet property="itemImageView" destination="cAe-aJ-dHJ" id="gZV-P7-Uv0"/>
+                        <outlet property="itemImageButton" destination="mT4-wp-Gu7" id="JdY-PR-iaQ"/>
                         <outlet property="itemNameLabel" destination="ZrL-Hc-MSd" id="p7l-Ut-3FS"/>
                     </connections>
                 </viewController>
