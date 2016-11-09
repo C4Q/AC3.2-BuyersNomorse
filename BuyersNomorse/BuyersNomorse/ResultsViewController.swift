@@ -38,6 +38,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(constructEndpoint(keyword: searchedItem, minPrice: nil, maxPrice: nil))
     }
     
     @IBAction func minPriceChanged(_ sender: UITextField) {
@@ -46,16 +47,28 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
 
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        
-        if let minPriceString = minPriceTextField.text, let maxPriceString = maxPriceTextField.text {
-            minPrice = minPriceString
-            maxPrice = maxPriceString
-            print(minPrice)
-            print(maxPrice)
+        if minPriceTextField.text! != "" {
+            guard let minNum = Double(minPriceTextField.text!)
+                else {
+                    print("minPrice field is not a num: \(minPriceTextField.text!)")
+                    return
+                }
+            minPrice = String(minNum)
         }
-      
- 
         
+        if maxPriceTextField.text! != "" {
+            guard let maxNum = Double(maxPriceTextField.text!)
+                else {
+                    print("maxPrice field is not a num: \(maxPriceTextField.text!)")
+                    return
+                }
+            maxPrice = String(maxNum)
+        }
+        
+        print("min price is \(minPrice)")
+        print("max price is \(maxPrice)")
+        
+        // Need to figure out how to guard min price < max price
     }
  
 
