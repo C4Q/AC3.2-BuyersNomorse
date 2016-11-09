@@ -35,6 +35,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     var itemSelected: SearchResults?
     var items: [SearchResults]?
+    // var sortedItems: [SearchResults]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +45,18 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
             if  let validData = data {
-                self.items = SearchResults.getDataFromJson(data: validData)
+                let unsortedItems = SearchResults.getDataFromJson(data: validData)
+                self.items = unsortedItems?.sorted { (a, b) -> Bool in
+                    
+                    var isSmaller = false
+                    let aPrice: Double? = Double(a.currentPrice)
+                    let bPrice: Double? = Double(b.currentPrice)
+                    
+                    if let aP = aPrice, let bP = bPrice {
+                        isSmaller = aP < bP
+                    }
+                    return isSmaller
+                }
             }
             DispatchQueue.main.async {
                 self.tableView?.reloadData()
@@ -56,7 +68,21 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
     }
+    //    func sortItems(arrItems: [SearchResults]) -> [SearchResults] {
+    //
+    ////        for i in 0..<arrItems.count {
+    ////            if arrItems[i]
+    ////        }t
+    //        var newArray = arrItems.sorted { (a, b) -> Bool in
+    //            Int(a.currentPrice)! < Int(b.currentPrice)!
+    //        }
+    //
+    //        return newArray
+    //    }
     
+    
+    
+
     func minMaxAreAcceptableAnswers() -> Bool {
         var minPDouble: Double?
         var maxPDouble: Double?
@@ -81,7 +107,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             maxPDouble = maxNum
             maxPrice = String(maxNum)
         }
-
+        
         if let minExists = minPDouble, let maxExists = maxPDouble {
             guard minExists < maxExists else {
                 errorLabel.text = "Minimum should be less than Maximum"
@@ -93,8 +119,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         print("MAX price is \(maxPrice)")
         return true
     }
-
-
+    
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         print("min price textfield is showing \(minPriceTextField.text)")
         print("MAX price textfield is showing \(maxPriceTextField.text)")
@@ -106,6 +132,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         errorLabel.isHidden = true
         print("The endpoint is currently \(self.endpoint)")
         loadData()
+
     }
     
     // MARK: - TABLEVIEW
@@ -151,11 +178,11 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             if let cell = sender as? ResultsTableViewCell {
                 if let destinationVC = segue.destination as? AlternativeChoicesViewController {
                     if let indexPath = self.tableView.indexPath(for: cell) {
-                    itemSelected = self.items?[indexPath.row]
-                    destinationVC.customerSelection = itemSelected
-                    print("*************************")
-                    print(itemSelected)
-                    print("*************************")
+                        itemSelected = self.items?[indexPath.row]
+                        destinationVC.customerSelection = itemSelected
+                        print("*************************")
+                        print(itemSelected)
+                        print("*************************")
                     }
                 }
             }
