@@ -200,18 +200,20 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             if let cell = sender as? ResultsTableViewCell {
                 if let destinationVC = segue.destination as? AlternativeChoicesViewController {
                     if let indexPath = self.tableView.indexPath(for: cell) {
-
                         if let itemSelected = self.items?[indexPath.row] {
                             destinationVC.customerSelection = itemSelected
                             var currentPrice = itemSelected.currentPrice
                             currentPrice.insert("$", at: itemSelected.currentPrice.startIndex)
                             destinationVC.alternativeItemHeaderText = "Other Items That Cost \(currentPrice)"
+                            destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
                             if let image = itemSelected.galleryUrl {
                                 APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
                                     if  let validData = data,
                                         let validImage = UIImage(data: validData) {
                                         DispatchQueue.main.async {
-                                            destinationVC.itemImageView.image = validImage
+                                            
+                                            destinationVC.itemImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
+//
                                             cell.setNeedsLayout()
                                         }
                                     }
