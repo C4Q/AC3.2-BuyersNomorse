@@ -18,8 +18,31 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var maxPrice: String?
     var searchedItem = ""
     
-    func constructEndpoint(keyword: String, minPrice: String?, maxPrice: String?) -> String {
-        let keywordInput = keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    var endpoint: String {
+        return constructEndpoint(minPrice: self.minPrice, maxPrice: self.maxPrice)
+    }
+    
+    var itemSelected: SearchResults?
+    var items: [SearchResults]?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadData()
+    }
+    
+    func loadData() {
+        APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
+            if  let validData = data {
+                self.items = SearchResults.getDataFromJson(data: validData)
+            }
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+        }
+    }
+    
+    func constructEndpoint(minPrice: String?, maxPrice: String?) -> String {
+        let keywordInput = self.searchedItem.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         
         var endpoint = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=\(keywordInput)"
         
@@ -32,24 +55,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         
         return endpoint
-    }
-    
-    var itemSelected: SearchResults?
-    var items: [SearchResults]?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let endpoint = constructEndpoint(keyword: searchedItem, minPrice: nil, maxPrice: nil)
-        
-        APIRequestManager.manager.getData(endPoint: endpoint) { (data: Data?) in
-            if  let validData = data {
-                self.items = SearchResults.getDataFromJson(data: validData)
-            }
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
-        }
     }
     
  
@@ -81,9 +86,10 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         print("max price is \(maxPrice)")
         
         // Need to figure out how to guard min price < max price
+        // Need to update tableview to new prices
     }
  
-
+    // MARK: - TABLEVIEW
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -98,6 +104,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! ResultsTableViewCell
         guard let itemsExists = items else { return cell }
         let item = itemsExists[indexPath.row]
+        
+        // Temporary, need to update a custom ResultsTableViewCell, images and stuff
         cell.textLabel?.text = item.title
         cell.detailTextLabel?.text = item.currentPrice
         return cell
@@ -107,7 +115,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         itemSelected = self.items?[indexPath.row]
         performSegue(withIdentifier: "SegueToAlternativeViewController", sender: itemSelected)
     }
-    
+
 
     
      // MARK: - Navigation

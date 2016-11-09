@@ -10,4 +10,5 @@ import UIKit
 
 class AlternativeChoicesCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var alternativeItemImageView: UIImageView!
 }
