@@ -57,27 +57,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBAction func maxPriceChanged(_ sender: UITextField) {
     }
     
-    /*
-     Int(minString)! and Int(maxString)! can cause an error
-     when user enters something other than a number, or an empty string.
-     Need to guard against those cases first
-        -Also, should we allow for it to search if only one number is entered? (ex. max  is 10, min is not entered)
-     */
-    
-//    func isMinMaxFieldCheckPassed() -> Bool {
-//        var check = false
-//        //couldn't find a way to cast as a double
-//        if let minString = minPriceTextField.text, let maxString = maxPriceTextField.text {
-//            if Int(minString)! < Int(maxString)! {
-//                check = true
-//            }
-//            else {
-//                check = false
-//            }
-//        }
-//        return check
-//    }
-    
     func minMaxAreAcceptableAnswers() -> Bool {
         var minPDouble: Double?
         var maxPDouble: Double?
@@ -87,7 +66,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if minPriceTextField.text! != "" {
             guard let minNum = Double(minPriceTextField.text!) else {
-                //print("minPrice field is not a num: \(minPriceTextField.text!)")
                 errorLabel.text = "The minimum price is not a valid answer"
                 return false
             }
@@ -97,7 +75,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if maxPriceTextField.text! != "" {
             guard let maxNum = Double(maxPriceTextField.text!) else {
-                //print("maxPrice field is not a num: \(maxPriceTextField.text!)")
                 errorLabel.text = "The maximum price is not a valid answer"
                 return false
             }
