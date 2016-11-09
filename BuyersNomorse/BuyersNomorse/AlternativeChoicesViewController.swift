@@ -6,56 +6,23 @@
 //  Copyright © 2016 Sabrina, Shashi. All rights reserved.
 //
 
-fileprivate Catagory: String {
-    
-    (antiques, "20081"
-    case art = "550"
-    case baby = "2984"
-    case books = "267"
-    case businessAndIndustrial = "12576"
-    case camerasAndPhoto = "625"
-    case cellphonesAndAccessories = "15032"
-    case clothingShoesAndAccessories = "11450"
-    case coinsAndPaperMoney = "11116"
-    case collectibles = "1"
-    case computersTabletsAndNetworking = "58058"
-    case consumerElectronics = "293"
-    case crafts = "14339"
-    case dollsAndBears = "237"
-    case moviesAndDVDs = "11232"
-    case entertainmentMemorabilia = "45100"
-    case everythingElse = "99"
-    case giftCardsAndCoupons = "172008"
-    case healthAndBeauty = "26395"
-    case homeAndGarden = "11700"
-    case jewelryAndWatches = "281"
-    case music = "11233"
-    case musicalInstrumentsAndGear = "619"
-    case petSupplies = "1281"
-    case potteryAndGlass = "870"
-    case realEstate = "10542"
-    case specialtyServices = "316"
-    case sportingGoods = "888"
-    case sportsMemCardsAndFanShop = "64482"
-    case stamps = "260"
-    case ticketsAndExperiences = "1305"
-    case toysAndHobbies = "220"
-    case travel = "3252"
-    case videoGamesAndConsoles = "1249"
+fileprivate let catagories = [("antiques", "20081"), ("art","550"), ("baby","2984"), ("books","267"), ("businessAndIndustrial","12576"), ("camerasAndPhoto","625"), ("cellphonesAndAccessories","15032"), ("clothingShoesAndAccessories","11450"),("coinsAndPaperMoney","11116"),("collectibles","1"),("computersTabletsAndNetworking","58058"),("consumerElectronics","293"),("crafts","14339"),("dollsAndBears","237"),("moviesAndDVDs","11232"),("entertainmentMemorabilia","45100"),("everythingElse","99"),("giftCardsAndCoupons","172008"),("healthAndBeauty","26395"), ("homeAndGarden","11700"),("jewelryAndWatches","281"), ("music","11233"),("musicalInstrumentsAndGear","619"),("petSupplies","1281"), (")potteryAndGlass","870"),("realEstate","10542"),("specialtyServices","316"),("sportingGoods","888"),("sportsMemCardsAndFanShop","64482"), ("stamps","260"),("ticketsAndExperiences","1305"),("toysAndHobbies","220"),("travel","3252"),("videoGamesAndConsoles","1249")]
 
-}
 
 fileprivate func randomCatogoryGenerator() -> String {
-   let rand = Int(arc4random_uniform(35))
-    var catogoryString: String!
-    
-  }
+    let rand = Int(arc4random_uniform(35))
+    return catagories[rand].1
+}
 
 
 import UIKit
 
 class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
+    let mytuple = [("hello", "world"),("h", "hkjhjh")]
+    
+    
+    
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -84,7 +51,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         print("custoer slection title is")
         print(customerSelection.title)
         itemNameLabel.text = customerSelection.title
-
+        
         APIRequestManager.manager.getData(endPoint: alternativeEndpoint) { (data: Data?) in
             if  let validData = data {
                 self.alternativeItems = SearchResults.getDataFromJson(data: validData)
@@ -97,7 +64,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     }
     
     // MARK: - Navigation
- 
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -126,5 +93,5 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         }
         return cell
     }
-
+    
 }
