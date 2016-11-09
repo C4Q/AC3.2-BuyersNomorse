@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A16E28E1DD3AD9800D39BE2 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A16E28D1DD3AD9800D39BE2 /* PopoverViewController.swift */; };
 		4B8AAB151DD2488700FAE9B1 /* AlternativeChoicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8AAB141DD2488700FAE9B1 /* AlternativeChoicesViewController.swift */; };
 		4B8AAB171DD2489800FAE9B1 /* AlternativeChoicesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8AAB161DD2489800FAE9B1 /* AlternativeChoicesCollectionViewCell.swift */; };
 		4BA91E8D1DD13C5D00B782B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA91E8C1DD13C5D00B782B4 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A16E28D1DD3AD9800D39BE2 /* PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		4B8AAB141DD2488700FAE9B1 /* AlternativeChoicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternativeChoicesViewController.swift; sourceTree = "<group>"; };
 		4B8AAB161DD2489800FAE9B1 /* AlternativeChoicesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternativeChoicesCollectionViewCell.swift; sourceTree = "<group>"; };
 		4BA91E891DD13C5D00B782B4 /* BuyersNomorse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuyersNomorse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +70,7 @@
 			children = (
 				4BA91E8C1DD13C5D00B782B4 /* AppDelegate.swift */,
 				4BA91E9E1DD13C7400B782B4 /* Main.storyboard */,
+				3A16E28D1DD3AD9800D39BE2 /* PopoverViewController.swift */,
 				4BBC28B01DD241B300E2E59D /* SearchItemViewController.swift */,
 				4BBC28BA1DD2443200E2E59D /* ResultsViewController.swift */,
 				4BBC28BC1DD2444800E2E59D /* ResultsTableViewCell.swift */,
@@ -161,6 +164,7 @@
 				4BBC28BB1DD2443200E2E59D /* ResultsViewController.swift in Sources */,
 				4B8AAB151DD2488700FAE9B1 /* AlternativeChoicesViewController.swift in Sources */,
 				4BBC28B11DD241B300E2E59D /* SearchItemViewController.swift in Sources */,
+				3A16E28E1DD3AD9800D39BE2 /* PopoverViewController.swift in Sources */,
 				9B159E1F1DD24AD400DB6B54 /* SearchResults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

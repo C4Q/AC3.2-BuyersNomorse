@@ -18,15 +18,22 @@ fileprivate func randomCatogoryGenerator() -> String {
 import UIKit
 
 class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
     
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var alternativeItemsHeader: UILabel!
     
+    
+    
+    
+    //var alternativeItemSelected: SearchResults?
+    var alternativeItemHeaderText = ""
     var customerSelection: SearchResults!
     var alternativeItems: [SearchResults]?
     var alternativeEndpoint: String {
+
         let randomCategory = randomCatogoryGenerator()
         let price = self.customerSelection.currentPrice
         return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategory)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
@@ -35,6 +42,8 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         itemNameLabel.text = customerSelection.title
+        alternativeItemsHeader.text = alternativeItemHeaderText
+        
         
         APIRequestManager.manager.getData(endPoint: alternativeEndpoint) { (data: Data?) in
             if  let validData = data {
@@ -78,4 +87,46 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         return cell
     }
     
+    //Trying to add popover segue
+    // MARK: - Navigation
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        if segue.identifier == "ShowAlternativeDetails" {
+//            var vc = segue.destination as! PopoverViewController
+//            
+//            var controller = vc.popoverPresentationController
+//            
+//            if controller != nil {
+//                controller?.delegate = self
+//            }
+////            if let cell = sender as? AlternativeChoicesCollectionViewCell {
+////                if let destinationVC = segue.destination as? PopoverViewController {
+////                    
+////                    var controller = destinationVC.popoverPresentationController
+////                    
+////                    if controller != nil {
+////                        controller?.delegate = self
+////                        if let indexPath = self.collectionView.indexPath(for: cell) {
+////                            alternativeItemSelected = self.alternativeItems?[indexPath.row]
+////                            //destinationVC.customerSelection = itemSelected
+////                            print("*************************")
+////                            print(alternativeItemSelected)
+////                            print("*************************")
+////                        }
+////                    }
+////                }
+////            }
+//        }
+//    }
+//    
+//    @IBAction func popover(_ sender: UIButton) {
+//        self.performSegue(withIdentifier: "ShowAlternativeDetails", sender: self)
+//    }
+//    
+//
+//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+//        return .none
+//    }
+//    
 }
