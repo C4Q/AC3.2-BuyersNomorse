@@ -42,21 +42,28 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
     }
     
+
+    
+//    func sortSmallestToLargest {
+//        let unsortedItems = SearchResults.getDataFromJson(data: validData)
+//        self.items = unsortedItems?.sorted { (a, b) -> Bool in
+//            
+//            var isSmaller = false
+//            let aPrice: Double? = Double(a.currentPrice)
+//            let bPrice: Double? = Double(b.currentPrice)
+//            
+//            if let aP = aPrice, let bP = bPrice {
+//                isSmaller = aP < bP
+//            }
+//            return isSmaller
+//        }
+//
+//    }
+    
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
             if  let validData = data {
-                let unsortedItems = SearchResults.getDataFromJson(data: validData)
-                self.items = unsortedItems?.sorted { (a, b) -> Bool in
-                    
-                    var isSmaller = false
-                    let aPrice: Double? = Double(a.currentPrice)
-                    let bPrice: Double? = Double(b.currentPrice)
-                    
-                    if let aP = aPrice, let bP = bPrice {
-                        isSmaller = aP < bP
-                    }
-                    return isSmaller
-                }
+                self.items = SearchResults.getDataFromJson(data: validData)
             }
             DispatchQueue.main.async {
                 self.tableView?.reloadData()
@@ -80,7 +87,13 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     //        return newArray
     //    }
     
-    
+    func sortSmallestToLargest() {
+        self.items = items?.sorted(by: { (a, b) -> Bool in
+            guard let aPrice = Double(a.currentPrice),
+                let bPrice = Double(b.currentPrice) else { return true }
+            return aPrice < bPrice
+        })
+    }
     
 
     func minMaxAreAcceptableAnswers() -> Bool {
@@ -134,6 +147,13 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
 
     }
+    
+/* Need to connect this button to storyboard
+    @IBAction func sortButtonTapped(_ sender: UIButton) {
+        sortSmallestToLargest()
+        loadData()
+    }
+*/
     
     // MARK: - TABLEVIEW
     
