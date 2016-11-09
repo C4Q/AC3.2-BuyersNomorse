@@ -13,11 +13,13 @@ class ResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var itemTitleLabel: UILabel!
     @IBOutlet weak var itemPriceLabel: UILabel!
+    var imageURL = ""
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        print(imageURL)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

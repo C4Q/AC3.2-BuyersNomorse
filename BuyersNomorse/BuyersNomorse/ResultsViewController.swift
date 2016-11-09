@@ -155,9 +155,22 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         guard let itemsExists = items else { return cell }
         let item = itemsExists[indexPath.row]
         
-        /* Temporary, need to update a custom ResultsTableViewCell, images and stuff */
         cell.itemTitleLabel.text = item.title
-//        cell. = item.currentPrice
+        cell.itemPriceLabel.text = item.currentPrice
+        
+        //Loads Image Async
+        if let image = item.galleryUrl {
+            APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
+                if  let validData = data,
+                    let validImage = UIImage(data: validData) {
+                    DispatchQueue.main.async {
+                        cell.itemImageView.image = validImage
+                        cell.setNeedsLayout()
+                    }
+                }
+            }
+        }
+        
         return cell
     }
     
