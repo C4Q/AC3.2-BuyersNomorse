@@ -17,6 +17,12 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     var customerSelection: SearchResults!
     var alternativeItems: [SearchResults]?
     var alternativeEndpoint: String {
+        
+        /*We need to figure out another way to do randomNum - make sure the categoryId's exist*/
+        /* Got error message from ebay: Submitted category [960] has expired. Try again with new category [74969] */
+        
+        /* maybe make enums for these category nums: http://www.isoldwhat.com/getcats/ */
+        
         let randomNum = arc4random_uniform(1000)+1
         let randomCategoryNum = String(randomNum)
         let price = self.customerSelection.currentPrice
