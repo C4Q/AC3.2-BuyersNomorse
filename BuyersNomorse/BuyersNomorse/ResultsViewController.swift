@@ -20,13 +20,15 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     var searchedItem = ""
     
     var endpoint: String {
+        var filterCount = 0
         let keywordInput = self.searchedItem.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
         var webAddress = "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=\(keywordInput)"
         if let maxPriceEntered = self.maxPrice {
-            webAddress += "&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(maxPriceEntered)"
+            webAddress += "&itemFilter(\(filterCount)).name=MaxPrice&itemFilter(\(filterCount)).value=\(maxPriceEntered)"
+            filterCount += 1
         }
         if let minPriceEntered = self.minPrice {
-            webAddress += "&itemFilter(1).name=MinPrice&itemFilter(1).value=\(minPriceEntered)"
+            webAddress += "&itemFilter(\(filterCount)).name=MinPrice&itemFilter(\(filterCount)).value=\(minPriceEntered)"
         }
         return webAddress
     }
