@@ -203,9 +203,15 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                     if let indexPath = self.tableView.indexPath(for: cell) {
                         if let itemSelected = self.items?[indexPath.row] {
                             destinationVC.customerSelection = itemSelected
-                            var currentPrice = itemSelected.currentPrice
-                            currentPrice.insert("$", at: itemSelected.currentPrice.startIndex)
-                            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(currentPrice)"
+                            //Trying to format the price into US Currency format
+                            var currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
+                            //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+                            let numberFormatter = NumberFormatter()
+                            numberFormatter.numberStyle = .currency
+                            numberFormatter.locale = Locale(identifier: "en_us")
+                            if let result = numberFormatter.string(from: currentPrice) {
+                            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(result)"
+                            }
                             destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
                             if let image = itemSelected.galleryUrl {
                                 APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
