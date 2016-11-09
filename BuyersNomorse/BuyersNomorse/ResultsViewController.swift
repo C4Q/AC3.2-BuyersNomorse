@@ -156,20 +156,10 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let item = itemsExists[indexPath.row]
         
         /* Temporary, need to update a custom ResultsTableViewCell, images and stuff */
-        cell.textLabel?.text = item.title
-        cell.detailTextLabel?.text = item.currentPrice
+        cell.itemTitleLabel.text = item.title
+//        cell. = item.currentPrice
         return cell
     }
-//    
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        print("At this point, self.items is this:")
-//        print(self.items)
-//        itemSelected = self.items?[indexPath.row]
-//        print("At this point, itemSelected is \(itemSelected)")
-//        print("It should be the same as \(self.items?[indexPath.row])")
-//        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: ResultsTableViewCell.self)
-//    }
-//    
     
     // MARK: - Navigation
     
