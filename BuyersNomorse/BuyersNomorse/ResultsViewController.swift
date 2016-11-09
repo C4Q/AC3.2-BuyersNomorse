@@ -129,14 +129,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         errorLabel.isHidden = true
         print("The endpoint is currently \(self.endpoint)")
         loadData()
-        
-        /* The error appears in that min price can't be entered without a max price
-            -Can we do any JSON manipulation so that we can do this?
-            -Otherwise, we'll need to change code, where we only accept if both min and max are enetered
-            -JSON parsing error for one example I tried - update SearchResults.swift to be more robust-
-                    http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&keywords=wor&itemFilter(0).name=MaxPrice&itemFilter(0).value=30.0&itemFilter(1).name=MinPrice&itemFilter(1).value=20.0
-        */
-        
     }
     
     // MARK: - TABLEVIEW
