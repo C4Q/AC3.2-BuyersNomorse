@@ -21,7 +21,6 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
     @IBAction func searchButtonTapped(_ sender: UIButton) {
         guard let searchString = searchTextField.text else { return }
         searchItem = searchString
-        //print(searchItem)
         guard searchItem != "" else { return }
         performSegue(withIdentifier: "SegueToResultsViewController", sender: searchItem)
     }
