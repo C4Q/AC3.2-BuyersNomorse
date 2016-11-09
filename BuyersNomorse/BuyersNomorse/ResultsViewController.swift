@@ -43,7 +43,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
 
-    
+/* New sort method below */
 //    func sortSmallestToLargest {
 //        let unsortedItems = SearchResults.getDataFromJson(data: validData)
 //        self.items = unsortedItems?.sorted { (a, b) -> Bool in
@@ -92,6 +92,14 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             guard let aPrice = Double(a.currentPrice),
                 let bPrice = Double(b.currentPrice) else { return true }
             return aPrice < bPrice
+        })
+    }
+    
+    func sortLargestToSmallest() {
+        self.items = items?.sorted(by: { (a, b) -> Bool in
+            guard let aPrice = Double(a.currentPrice),
+                let bPrice = Double(b.currentPrice) else { return true }
+            return aPrice > bPrice
         })
     }
     
@@ -147,13 +155,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
 
     }
-    
-/* Need to connect this button to storyboard
-    @IBAction func sortButtonTapped(_ sender: UIButton) {
-        sortSmallestToLargest()
-        loadData()
-    }
-*/
     
     // MARK: - TABLEVIEW
     
