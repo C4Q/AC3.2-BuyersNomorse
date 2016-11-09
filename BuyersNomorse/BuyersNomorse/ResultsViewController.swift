@@ -12,6 +12,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
 
     @IBOutlet weak var minPriceTextField: UITextField!
     @IBOutlet weak var maxPriceTextField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
     
     var minPrice: String?
     var maxPrice: String?
@@ -38,9 +39,20 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(constructEndpoint(keyword: searchedItem, minPrice: nil, maxPrice: nil))
+        
+        let endpoint = constructEndpoint(keyword: searchedItem, minPrice: nil, maxPrice: nil)
+        
+        APIRequestManager.manager.getData(endPoint: endpoint) { (data: Data?) in
+            if  let validData = data {
+                self.items = SearchResults.getDataFromJson(data: validData)
+            }
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+        }
     }
     
+ 
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
@@ -78,15 +90,16 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //critics.count
+        guard let itemsExists = items else { return 0 }
+        return itemsExists.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! ResultsTableViewCell
-//        let critic = critics[indexPath.row]
-//        cell.criticNameLabel.text = critic.name
-      //  cell.textLabel?.text = "Hello"
-
+        guard let itemsExists = items else { return cell }
+        let item = itemsExists[indexPath.row]
+        cell.textLabel?.text = item.title
+        cell.detailTextLabel?.text = item.currentPrice
         return cell
     }
     
