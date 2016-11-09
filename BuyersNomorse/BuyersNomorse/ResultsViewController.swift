@@ -158,20 +158,32 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         cell.detailTextLabel?.text = item.currentPrice
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        itemSelected = self.items?[indexPath.row]
-        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: itemSelected)
-    }
-    
+//    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        print("At this point, self.items is this:")
+//        print(self.items)
+//        itemSelected = self.items?[indexPath.row]
+//        print("At this point, itemSelected is \(itemSelected)")
+//        print("It should be the same as \(self.items?[indexPath.row])")
+//        performSegue(withIdentifier: "SegueToAlternativeViewController", sender: ResultsTableViewCell.self)
+//    }
+//    
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "SegueToAlternativeViewController" {
-            if let destinationVC = segue.destination as? AlternativeChoicesViewController {
-                destinationVC.customerSelection = itemSelected
+            if let cell = sender as? ResultsTableViewCell {
+                if let destinationVC = segue.destination as? AlternativeChoicesViewController {
+                    if let indexPath = self.tableView.indexPath(for: cell) {
+                    itemSelected = self.items?[indexPath.row]
+                    destinationVC.customerSelection = itemSelected
+                    print("*************************")
+                    print(itemSelected)
+                    print("*************************")
+                    }
+                }
             }
         }
     }
