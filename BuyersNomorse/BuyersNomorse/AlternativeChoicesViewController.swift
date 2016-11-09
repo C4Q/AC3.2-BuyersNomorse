@@ -20,7 +20,6 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         return constructAlternativeEndpoint()
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         itemNameLabel.text = customerSelection.title
@@ -39,7 +38,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         let randomNum = arc4random_uniform(1000)+1
         let randomCategoryNum = String(randomNum)
         let price = self.customerSelection.currentPrice
-        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=25&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
+        return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategoryNum)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
     }
 
     
@@ -81,7 +80,6 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
                 }
             }
         }
-        
         return cell
     }
     
