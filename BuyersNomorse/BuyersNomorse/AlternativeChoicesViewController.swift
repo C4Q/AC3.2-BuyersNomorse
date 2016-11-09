@@ -31,6 +31,10 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("dump custoer slecion")
+        dump(customerSelection)
+        print("custoer slection title is")
+        print(customerSelection.title)
         itemNameLabel.text = customerSelection.title
 
         APIRequestManager.manager.getData(endPoint: alternativeEndpoint) { (data: Data?) in
