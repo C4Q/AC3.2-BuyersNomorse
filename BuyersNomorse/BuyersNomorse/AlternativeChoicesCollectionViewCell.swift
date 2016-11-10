@@ -8,7 +8,20 @@
 
 import UIKit
 
-class AlternativeChoicesCollectionViewCell: UICollectionViewCell {
+class AlternativeChoicesCollectionViewCell: UICollectionViewCell, UIPopoverPresentationControllerDelegate {
     
+    @IBOutlet weak var popoverButton: UIButton!
+
+
     @IBOutlet weak var alternativeItemImageView: UIImageView!
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
 }

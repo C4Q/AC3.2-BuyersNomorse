@@ -17,7 +17,7 @@ fileprivate func randomCatogoryGenerator() -> String {
 
 import UIKit
 
-class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate {
     
     
     @IBOutlet weak var itemNameLabel: UILabel!
@@ -69,6 +69,9 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlternativeChoice", for: indexPath) as! AlternativeChoicesCollectionViewCell
+        cell.popoverButton.tag = indexPath.row
+        cell.popoverButton.addTarget(self, action: "", for: UIControlEvents.touchUpInside)
+        
         
         guard let alternativeItemsExists = alternativeItems else { return cell }
         let item = alternativeItemsExists[indexPath.row]
@@ -84,6 +87,8 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
                 }
             }
         }
+        
+        
         return cell
     }
     
@@ -120,13 +125,24 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
 //        }
 //    }
 //    
-//    @IBAction func popover(_ sender: UIButton) {
-//        self.performSegue(withIdentifier: "ShowAlternativeDetails", sender: self)
-//    }
-//    
-//
-//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-//        return .none
-//    }
-//    
+    
+    @IBAction func popoverButtonTapped(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "AlternativeDetailSegue", sender: self)
+    }
+ 
+    
+
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AlternativeDetailSegue" {
+            let vc = segue.destination
+            let controller = vc.popoverPresentationController
+            if controller != nil {
+                controller?.delegate = self
+            }
+        }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }
