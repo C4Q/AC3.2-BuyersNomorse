@@ -25,11 +25,18 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var alternativeItemsHeader: UILabel!
     
+    @IBOutlet weak var itemImageButton: UIButton!
+    @IBAction func alternativeImageTapped(_ sender: UIButton) {
+        if let alternativeItemLink = URL(string: alternativeItemImageURLString) {
+        UIApplication.shared.open(alternativeItemLink)
+        }
+    }
     
     
     
     //var alternativeItemSelected: SearchResults?
     var alternativeItemHeaderText = ""
+    var alternativeItemImageURLString = ""
     var customerSelection: SearchResults!
     var alternativeItems: [SearchResults]?
     var alternativeEndpoint: String {
@@ -90,6 +97,14 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let alternativeItemExists = alternativeItems else {return}
+        let item = alternativeItemExists[indexPath.row]
+        if let alternativeItemURL = URL(string: item.viewItemUrl) {
+            UIApplication.shared.open(alternativeItemURL)
+        }
     }
     
     //Trying to add popover segue

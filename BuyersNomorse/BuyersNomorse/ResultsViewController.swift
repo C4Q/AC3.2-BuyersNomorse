@@ -42,26 +42,34 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
     }
     
+
+/* New sort method below */
+//    func sortSmallestToLargest {
+//        let unsortedItems = SearchResults.getDataFromJson(data: validData)
+//        self.items = unsortedItems?.sorted { (a, b) -> Bool in
+//            
+//            var isSmaller = false
+//            let aPrice: Double? = Double(a.currentPrice)
+//            let bPrice: Double? = Double(b.currentPrice)
+//            
+//            if let aP = aPrice, let bP = bPrice {
+//                isSmaller = aP < bP
+//            }
+//            return isSmaller
+//        }
+//
+//    }
+    
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
             if  let validData = data {
-                let unsortedItems = SearchResults.getDataFromJson(data: validData)
-                self.items = unsortedItems?.sorted { (a, b) -> Bool in
-                    
-                    var isSmaller = false
-                    let aPrice: Double? = Double(a.currentPrice)
-                    let bPrice: Double? = Double(b.currentPrice)
-                    
-                    if let aP = aPrice, let bP = bPrice {
-                        isSmaller = aP < bP
-                    }
-                    return isSmaller
-                }
+                self.items = SearchResults.getDataFromJson(data: validData)
             }
             DispatchQueue.main.async {
                 self.tableView?.reloadData()
             }
         }
+        print("The endpoint is currently \(self.endpoint)")
     }
     
     @IBAction func minPriceChanged(_ sender: UITextField) {
@@ -80,7 +88,21 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     //        return newArray
     //    }
     
+    func sortSmallestToLargest() {
+        self.items = items?.sorted(by: { (a, b) -> Bool in
+            guard let aPrice = Double(a.currentPrice),
+                let bPrice = Double(b.currentPrice) else { return true }
+            return aPrice < bPrice
+        })
+    }
     
+    func sortLargestToSmallest() {
+        self.items = items?.sorted(by: { (a, b) -> Bool in
+            guard let aPrice = Double(a.currentPrice),
+                let bPrice = Double(b.currentPrice) else { return true }
+            return aPrice > bPrice
+        })
+    }
     
 
     func minMaxAreAcceptableAnswers() -> Bool {
@@ -130,7 +152,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             return
         }
         errorLabel.isHidden = true
-        print("The endpoint is currently \(self.endpoint)")
         loadData()
 
     }
@@ -176,33 +197,38 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "SegueToAlternativeViewController" {
-            if let cell = sender as? ResultsTableViewCell {
-                if let destinationVC = segue.destination as? AlternativeChoicesViewController {
-                    if let indexPath = self.tableView.indexPath(for: cell) {
-
-                        if let itemSelected = self.items?[indexPath.row] {
-                            destinationVC.customerSelection = itemSelected
-                            var currentPrice = itemSelected.currentPrice
-                            currentPrice.insert("$", at: itemSelected.currentPrice.startIndex)
-                            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(currentPrice)"
-                            if let image = itemSelected.galleryUrl {
-                                APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
-                                    if  let validData = data,
-                                        let validImage = UIImage(data: validData) {
-                                        DispatchQueue.main.async {
-                                            destinationVC.itemImageView.image = validImage
-                                            cell.setNeedsLayout()
-                                        }
-                                    }
-                                }
-                            }
-                        }
+        guard segue.identifier == "SegueToAlternativeViewController",
+            let cell = sender as? ResultsTableViewCell,
+            let destinationVC = segue.destination as? AlternativeChoicesViewController,
+            let indexPath = self.tableView.indexPath(for: cell),
+            let itemSelected = self.items?[indexPath.row] else {
+                return
+        }
+        destinationVC.customerSelection = itemSelected
+        //Trying to format the price into US Currency format
+        var currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
+        //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale(identifier: "en_us")
+        
+        if let result = numberFormatter.string(from: currentPrice) {
+            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(result)"
+        }
+        destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
+        if let image = itemSelected.galleryUrl {
+            APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
+                if  let validData = data,
+                    let validImage = UIImage(data: validData) {
+                    DispatchQueue.main.async {
+                        
+                        destinationVC.itemImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
+                        //
+                        cell.setNeedsLayout()
                     }
                 }
             }
+            print("The image selected is \(image)")
         }
     }
-    
-    
 }
