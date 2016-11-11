@@ -190,7 +190,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         cell.itemTitleLabel.text = item.title
         
         //Trying to format the price into US Currency format
-        //Source (Lines 196-202): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+        //Source (Lines 194-200): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let currentPrice = NSDecimalNumber(string: item.currentPrice)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
@@ -215,6 +215,10 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return cell
     }
     
+    //Deselects selected row after return from Alternative Choices View Controller
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     
     
     // MARK: - Navigation
@@ -231,7 +235,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         destinationVC.customerSelection = itemSelected
         
         //Trying to format the price into US Currency format
-        //Source (Lines 236-242): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+        //Source (Lines 239-245): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
