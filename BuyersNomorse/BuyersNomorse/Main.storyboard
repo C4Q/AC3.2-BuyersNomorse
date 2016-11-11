@@ -367,6 +367,13 @@
                                     <action selector="alternativeItemImageButtonTapped:" destination="GhZ-zw-EIs" eventType="touchUpInside" id="HRc-VX-hvE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F6C-DM-jvN">
+                                <frame key="frameInset" minX="16" minY="47" width="343" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.92941176469999998" green="0.4549019608" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -382,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWH-xk-9FP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3834" y="116"/>
+            <point key="canvasLocation" x="3832.8000000000002" y="115.59220389805098"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gkv-ZS-G3f">
@@ -404,6 +411,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="AYo-PA-02V"/>
+        <segue reference="cZc-E6-IjZ"/>
     </inferredMetricsTieBreakers>
 </document>
