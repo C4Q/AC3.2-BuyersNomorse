@@ -11,8 +11,12 @@ import UIKit
 class AlternativePopoverViewController: UIViewController, UIPopoverControllerDelegate {
     
     @IBOutlet weak var imageButton: UIButton!
+    
+    @IBOutlet weak var alternativeItemNameLabel: UILabel!
+    @IBOutlet weak var alternativeItemPriceLabel: UILabel!
+    
     var itemImage: String?
-    //@IBOutlet weak var popoverLabel: UILabel!
+    
     
     var alternativeItem: SearchResults?
     
@@ -26,7 +30,12 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        popoverLabel.text = alternativeItem?.categoryName
+        
+        alternativeItemNameLabel.text = alternativeItem?.categoryName
+        
+        if let itemPrice = alternativeItem?.currentPrice {
+            alternativeItemPriceLabel.text = ("$ \(itemPrice)")
+        }
         
         guard let alternativeItemsExists = alternativeItem else { return }
         
@@ -37,7 +46,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
         else if let smallImage = alternativeItem?.galleryUrl {
             itemImage = smallImage
         }
-       
+        
         if let image = itemImage {
             APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
                 if  let validData = data,
@@ -53,7 +62,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
+        
     }
     func prepareForReuse() {
         self.imageButton.imageView?.image = nil
