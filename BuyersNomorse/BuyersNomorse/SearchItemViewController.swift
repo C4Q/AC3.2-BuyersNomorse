@@ -12,6 +12,7 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
     
     var searchItem = ""
     
+    
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var ebayLogoImageView: UIImageView!
@@ -26,6 +27,8 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
         guard searchItem != "" else { return }
         performSegue(withIdentifier: "SegueToResultsViewController", sender: searchItem)
     }
+    
+    
     
     // MARK: - Navigation
     
