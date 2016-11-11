@@ -40,6 +40,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.tintColor = UIColor(red:0.29, green:0.44, blue:0.55, alpha:1.0)
         loadData()
     }
     
