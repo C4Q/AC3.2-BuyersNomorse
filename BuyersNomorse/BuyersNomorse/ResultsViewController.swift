@@ -42,23 +42,23 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
     }
     
-
-/* New sort method below */
-//    func sortSmallestToLargest {
-//        let unsortedItems = SearchResults.getDataFromJson(data: validData)
-//        self.items = unsortedItems?.sorted { (a, b) -> Bool in
-//            
-//            var isSmaller = false
-//            let aPrice: Double? = Double(a.currentPrice)
-//            let bPrice: Double? = Double(b.currentPrice)
-//            
-//            if let aP = aPrice, let bP = bPrice {
-//                isSmaller = aP < bP
-//            }
-//            return isSmaller
-//        }
-//
-//    }
+    
+    /* New sort method below */
+    //    func sortSmallestToLargest {
+    //        let unsortedItems = SearchResults.getDataFromJson(data: validData)
+    //        self.items = unsortedItems?.sorted { (a, b) -> Bool in
+    //
+    //            var isSmaller = false
+    //            let aPrice: Double? = Double(a.currentPrice)
+    //            let bPrice: Double? = Double(b.currentPrice)
+    //
+    //            if let aP = aPrice, let bP = bPrice {
+    //                isSmaller = aP < bP
+    //            }
+    //            return isSmaller
+    //        }
+    //
+    //    }
     
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
@@ -104,7 +104,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         })
     }
     
-
+    
     func minMaxAreAcceptableAnswers() -> Bool {
         var minPDouble: Double?
         var maxPDouble: Double?
@@ -153,7 +153,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         errorLabel.isHidden = true
         loadData()
-
+        
     }
     
     // MARK: - TABLEVIEW
@@ -223,7 +223,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                     DispatchQueue.main.async {
                         
                         destinationVC.itemImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
-                        //
                         cell.setNeedsLayout()
                     }
                 }

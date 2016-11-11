@@ -17,7 +17,7 @@ fileprivate func randomCatogoryGenerator() -> String {
 
 import UIKit
 
-class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate {
+class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate{
     
     
     @IBOutlet weak var itemNameLabel: UILabel!
@@ -28,7 +28,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var itemImageButton: UIButton!
     @IBAction func alternativeImageTapped(_ sender: UIButton) {
         if let alternativeItemLink = URL(string: alternativeItemImageURLString) {
-        UIApplication.shared.open(alternativeItemLink)
+            UIApplication.shared.open(alternativeItemLink)
         }
     }
     
@@ -39,12 +39,14 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     var alternativeItemImageURLString = ""
     var customerSelection: SearchResults!
     var alternativeItems: [SearchResults]?
+    var alternativeItemSelected: SearchResults?
     var alternativeEndpoint: String {
-
+        
         let randomCategory = randomCatogoryGenerator()
         let price = self.customerSelection.currentPrice
         return "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=SabrinaI-GroupPro-PRD-dbff3fe44-d9ad0129&RESPONSE-DATA-FORMAT=JSON&paginationInput.entriesPerPage=30&categoryId=\(randomCategory)&itemFilter(0).name=MaxPrice&itemFilter(0).value=\(price)&itemFilter(1).name=MinPrice&itemFilter(1).value=\(price)"
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,8 +78,6 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlternativeChoice", for: indexPath) as! AlternativeChoicesCollectionViewCell
-        cell.popoverButton.tag = indexPath.row
-        cell.popoverButton.addTarget(self, action: "", for: UIControlEvents.touchUpInside)
         
         
         guard let alternativeItemsExists = alternativeItems else { return cell }
@@ -99,65 +99,35 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let alternativeItemExists = alternativeItems else {return}
-        let item = alternativeItemExists[indexPath.row]
-        if let alternativeItemURL = URL(string: item.viewItemUrl) {
-            UIApplication.shared.open(alternativeItemURL)
-        }
+        
+        alternativeItemSelected = self.alternativeItems?[indexPath.row]
+        performSegue(withIdentifier: "PopSegue", sender: self)
+        
+        
     }
     
-    //Trying to add popover segue
-    // MARK: - Navigation
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == "ShowAlternativeDetails" {
-//            var vc = segue.destination as! PopoverViewController
-//            
-//            var controller = vc.popoverPresentationController
-//            
-//            if controller != nil {
-//                controller?.delegate = self
-//            }
-////            if let cell = sender as? AlternativeChoicesCollectionViewCell {
-////                if let destinationVC = segue.destination as? PopoverViewController {
-////                    
-////                    var controller = destinationVC.popoverPresentationController
-////                    
-////                    if controller != nil {
-////                        controller?.delegate = self
-////                        if let indexPath = self.collectionView.indexPath(for: cell) {
-////                            alternativeItemSelected = self.alternativeItems?[indexPath.row]
-////                            //destinationVC.customerSelection = itemSelected
-////                            print("*************************")
-////                            print(alternativeItemSelected)
-////                            print("*************************")
-////                        }
-////                    }
-////                }
-////            }
-//        }
-//    }
-//    
-    
-    @IBAction func popoverButtonTapped(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "AlternativeDetailSegue", sender: self)
-    }
- 
-    
-
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AlternativeDetailSegue" {
-            let vc = segue.destination
-            let controller = vc.popoverPresentationController
-            if controller != nil {
-                controller?.delegate = self
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "PopSegue" {
+            if let destinationVC = segue.destination as? AlternativePopoverViewController {
+                destinationVC.alternativeItem = alternativeItemSelected
+                
+                let vc = segue.destination
+                let controller = vc.popoverPresentationController
+                if controller != nil {
+                    controller?.delegate = self
+                }
             }
         }
+        
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 }
+
+

@@ -250,11 +250,51 @@
                         <outlet property="collectionView" destination="mkt-Io-aeE" id="wKv-dR-P0u"/>
                         <outlet property="itemImageButton" destination="mT4-wp-Gu7" id="JdY-PR-iaQ"/>
                         <outlet property="itemNameLabel" destination="ZrL-Hc-MSd" id="p7l-Ut-3FS"/>
+                        <segue destination="hmd-KP-AIe" kind="popoverPresentation" identifier="PopSegue" popoverAnchorView="p1b-JR-k60" id="wQG-Ro-LHU">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                        <segue destination="hmd-KP-AIe" kind="show" identifier="RegularSegue" id="XcA-rW-Zmt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="adG-be-mhp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2876" y="115.59220389805098"/>
+        </scene>
+        <!--Alternative Popover View Controller-->
+        <scene sceneID="nEm-FV-cP0">
+            <objects>
+                <viewController id="hmd-KP-AIe" customClass="AlternativePopoverViewController" customModule="BuyersNomorse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1gc-Js-0yX"/>
+                        <viewControllerLayoutGuide type="bottom" id="sxd-aQ-InN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="29d-lA-3B5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3BS-b3-apj">
+                                <rect key="frame" x="36" y="28" width="303" height="280"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbV-Bv-tCX">
+                                <rect key="frame" x="36" y="363" width="277" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SFI-P8-jl4"/>
+                    <connections>
+                        <outlet property="popoverImage" destination="3BS-b3-apj" id="i34-cb-bOb"/>
+                        <outlet property="popoverLabel" destination="pbV-Bv-tCX" id="u5W-Ki-Ld3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ymh-iN-8ri" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3838" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gkv-ZS-G3f">
@@ -275,4 +315,7 @@
             <point key="canvasLocation" x="167.19999999999999" y="116.49175412293854"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="XcA-rW-Zmt"/>
+    </inferredMetricsTieBreakers>
 </document>
