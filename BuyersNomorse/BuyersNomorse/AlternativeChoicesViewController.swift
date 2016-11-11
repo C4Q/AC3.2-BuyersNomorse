@@ -103,7 +103,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         alternativeItemSelected = self.alternativeItems?[indexPath.row]
-        performSegue(withIdentifier: "PopSegue", sender: self)
+        performSegue(withIdentifier: "PopoverViewSegue", sender: self)
         
         
     }
@@ -111,7 +111,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "PopSegue" {
+        if segue.identifier == "PopoverViewSegue" {
             if let destinationVC = segue.destination as? AlternativePopoverViewController {
                 destinationVC.alternativeItem = alternativeItemSelected
                 
