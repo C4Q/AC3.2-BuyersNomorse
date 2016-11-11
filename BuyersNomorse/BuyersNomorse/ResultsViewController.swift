@@ -13,6 +13,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBOutlet weak var minPriceTextField: UITextField!
     @IBOutlet weak var maxPriceTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var errorLabel: UILabel!
     var minPrice: String?
@@ -72,6 +73,18 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         print("The endpoint is currently \(self.endpoint)")
     }
     
+    @IBAction func indexChanged(_ sender: AnyObject) {
+        switch sortSegmentedControl.selectedSegmentIndex {
+        case 0:
+            print("Ascending Selected")
+            sortSmallestToLargest()
+        case 1:
+            print("Descending Selected")
+            sortLargestToSmallest()
+        default:
+            break
+        }
+    }
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
@@ -92,6 +105,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.items = items?.sorted(by: { (a, b) -> Bool in
             guard let aPrice = Double(a.currentPrice),
                 let bPrice = Double(b.currentPrice) else { return true }
+            print(aPrice, bPrice)
             return aPrice < bPrice
         })
     }
@@ -173,10 +187,17 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let item = itemsExists[indexPath.row]
         
         cell.itemTitleLabel.text = item.title
-        var currentPrice = item.currentPrice
-        currentPrice.insert("$", at: currentPrice.startIndex)
-        cell.itemPriceLabel.text = currentPrice
         
+        //Trying to format the price into US Currency format
+        //Source (Lines 196-202): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+        let currentPrice = NSDecimalNumber(string: item.currentPrice)
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale(identifier: "en_us")
+        if let result = numberFormatter.string(from: currentPrice) {
+            cell.itemPriceLabel.text = result
+        }
+    
         //Loads Image Async
         if let image = item.galleryUrl {
             APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
@@ -207,16 +228,17 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                 return
         }
         destinationVC.customerSelection = itemSelected
+        
         //Trying to format the price into US Currency format
+        //Source (Lines 236-242): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
-        //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.locale = Locale(identifier: "en_us")
-        
         if let result = numberFormatter.string(from: currentPrice) {
             destinationVC.alternativeItemHeaderText = "Other Items @ \(result)"
         }
+        
         destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
         if let image = itemSelected.galleryUrl {
             APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
