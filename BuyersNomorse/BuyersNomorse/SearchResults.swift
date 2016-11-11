@@ -8,9 +8,26 @@
 
 import Foundation
 
-enum searchResultParseError: Error {
-    case jsonSerialization
-    case getResults
+internal enum jsonSerialization: Error {
+    case response(jsonData: Any)
+    case findItemsAdvancedResponse(response: [String: AnyObject])
+    case theResults(findItemsAdvancedResponse: [[String : AnyObject]])
+    case item(theResults: [[String : AnyObject]])
+}
+
+internal enum searchResultParseError: Error {
+    case titleArr(itemObject: Dictionary<String, AnyObject>)
+    case title(titleArr: [AnyObject])
+    case primaryCategory(itemObject: Dictionary<String, AnyObject>)
+    case categoryIdArr(primaryCategory: [[String : AnyObject]])
+    case categoryId(categoryIdArr: [AnyObject])
+    case categoryNameArr(primaryCategory: [[String : AnyObject]])
+    case categoryName(categoryNameArr: [AnyObject])
+    case viewItemURLArr(itemObject: Dictionary<String, AnyObject>)
+    case viewItemUrl(viewItemURLArr: [AnyObject])
+    case sellingStatus(itemObject: Dictionary<String, AnyObject>)
+    case convertedPrice(sellingStatus: [[String : AnyObject]])
+    case currentPrice(convertedPrice: [[String : String]])
 }
 
 class SearchResults {
@@ -35,48 +52,107 @@ class SearchResults {
         
         do {
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
-            guard let response = jsonData as? [String: Any],
-                let findItemsAdvancedResponse = response["findItemsAdvancedResponse"] as? [[String: Any]],
-                let theResults = findItemsAdvancedResponse[0]["searchResult"] as? [[String:Any]],
-                let item = theResults[0]["item"] as? [[String: Any]]
-                else { throw searchResultParseError.jsonSerialization }
+            
+            guard let response = jsonData as? [String: AnyObject] else {
+                throw jsonSerialization.response(jsonData: jsonData)
+            }
+            guard let findItemsAdvancedResponse = response["findItemsAdvancedResponse"] as? [[String: AnyObject]] else {
+                throw jsonSerialization.findItemsAdvancedResponse(response: response)
+            }
+            guard let theResults = findItemsAdvancedResponse[0]["searchResult"] as? [[String:AnyObject]] else {
+                throw jsonSerialization.theResults(findItemsAdvancedResponse: findItemsAdvancedResponse)
+            }
+            
+            guard let item = theResults[0]["item"] as? [[String: AnyObject]] else {
+                throw jsonSerialization.item(theResults: theResults)
+            }
             
             for itemObject in item {
-                guard let titleArr = itemObject["title"] as? [Any],
-                    let title = titleArr[0] as? String,
+                guard let titleArr = itemObject["title"] as? [AnyObject] else {
+                    throw searchResultParseError.titleArr(itemObject: itemObject)
+                }
+                guard let title = titleArr[0] as? String else {
+                    throw searchResultParseError.title(titleArr: titleArr)
+                }
+                
+                guard let primaryCategory = itemObject["primaryCategory"] as? [[String: AnyObject]] else {
+                    throw searchResultParseError.primaryCategory(itemObject: itemObject)
+                }
+                guard let categoryIdArr = primaryCategory[0]["categoryId"] as? [AnyObject] else {
+                    throw searchResultParseError.categoryIdArr(primaryCategory: primaryCategory)
+                }
+                guard let categoryId = categoryIdArr[0] as? String else {
+                    throw searchResultParseError.categoryId(categoryIdArr: categoryIdArr)
+                }
                     
-                    let primaryCategory = itemObject["primaryCategory"] as? [[String: Any]],
-                    let categoryIdArr = primaryCategory[0]["categoryId"] as? [Any],
-                    let categoryId = categoryIdArr[0] as? String,
-                    
-                    let categoryNameArr = primaryCategory[0]["categoryName"] as? [Any],
-                    let categoryName = categoryNameArr[0] as? String,
+                guard let categoryNameArr = primaryCategory[0]["categoryName"] as? [AnyObject] else {
+                    throw searchResultParseError.categoryNameArr(primaryCategory: primaryCategory)
+                }
+                guard let categoryName = categoryNameArr[0] as? String else {
+                    throw searchResultParseError.categoryName(categoryNameArr: categoryNameArr)
+                }
                     
 
                     
-                    let viewItemURLArr = itemObject["viewItemURL"] as? [Any],
-                    let viewItemUrl = viewItemURLArr[0] as? String,
+                guard let viewItemURLArr = itemObject["viewItemURL"] as? [AnyObject] else {
+                    throw searchResultParseError.viewItemURLArr(itemObject: itemObject)
+                }
+                guard let viewItemUrl = viewItemURLArr[0] as? String else {
+                    throw searchResultParseError.viewItemUrl(viewItemURLArr: viewItemURLArr)
+                }
                     
-                    let sellingStatus = itemObject["sellingStatus"] as? [[String:Any]],
-                    let convertedPrice = sellingStatus[0]["convertedCurrentPrice"] as? [[String:String]],
-                    let currentPrice = convertedPrice[0]["__value__"]
-                    
-                    else { throw searchResultParseError.getResults }
+                guard let sellingStatus = itemObject["sellingStatus"] as? [[String:AnyObject]] else {
+                    throw searchResultParseError.sellingStatus(itemObject: itemObject)
+                }
+                guard let convertedPrice = sellingStatus[0]["convertedCurrentPrice"] as? [[String:String]] else {
+                    throw searchResultParseError.convertedPrice(sellingStatus: sellingStatus)
+                }
+                guard let currentPrice = convertedPrice[0]["__value__"] else {
+                    throw searchResultParseError.currentPrice(convertedPrice: convertedPrice)
+                }
                 
                 var galleryUrl: String?
                 
-                if let galleryUrlArr = itemObject["galleryURL"] as? [Any] {
+                if let galleryUrlArr = itemObject["galleryURL"] as? [AnyObject] {
                     galleryUrl = galleryUrlArr[0] as? String
                 }
                 
                 let sr = SearchResults(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
                 searchResults.append(sr)
             }
-        } catch searchResultParseError.jsonSerialization {
-            print("jsonSerialization error")
-        }catch searchResultParseError.getResults {
-            print("get results parsing error")
-        }catch {
+        } catch let jsonSerialization.response(jsonData: jsonData) {
+            print("PARSE ERROR: \(jsonData)")
+        } catch let jsonSerialization.findItemsAdvancedResponse(response: response) {
+            print("PARSE ERROR: \(response)")
+        } catch let jsonSerialization.theResults(findItemsAdvancedResponse: findItemsAdvancedResponse) {
+            print("PARSE ERROR: \(findItemsAdvancedResponse)")
+        } catch let jsonSerialization.item(theResults: theResults) {
+            print("PARSE ERROR: \(theResults)")
+        } catch let searchResultParseError.titleArr(itemObject: itemObject) {
+            print("PARSE ERROR: \(itemObject)")
+        } catch let searchResultParseError.title(titleArr: titleArr) {
+            print("PARSE ERROR: \(titleArr)")
+        } catch let searchResultParseError.primaryCategory(itemObject: itemObject) {
+            print("PARSE ERROR: \(itemObject)")
+        } catch let searchResultParseError.categoryIdArr(primaryCategory: primaryCategory) {
+            print("PARSE ERROR: \(primaryCategory)")
+        } catch let searchResultParseError.categoryId(categoryIdArr: categoryIdArr) {
+            print("PARSE ERROR: \(categoryIdArr)")
+        } catch let searchResultParseError.categoryNameArr(primaryCategory: primaryCategory) {
+            print("PARSE ERROR: \(primaryCategory)")
+        } catch let searchResultParseError.categoryName(categoryNameArr: categoryNameArr) {
+            print("PARSE ERROR: \(categoryNameArr)")
+        } catch let searchResultParseError.viewItemURLArr(itemObject: itemObject) {
+            print("PARSE ERROR: \(itemObject)")
+        } catch let searchResultParseError.viewItemUrl(viewItemURLArr: viewItemURLArr) {
+            print("PARSE ERROR: \(viewItemURLArr)")
+        } catch let searchResultParseError.sellingStatus(itemObject: itemObject) {
+            print("PARSE ERROR: \(itemObject)")
+        } catch let searchResultParseError.convertedPrice(sellingStatus: sellingStatus) {
+            print("PARSE ERROR: \(sellingStatus)")
+        } catch let searchResultParseError.currentPrice(convertedPrice: convertedPrice) {
+            print("PARSE ERROR: \(convertedPrice)")
+        } catch {
             print(error)
         }
         

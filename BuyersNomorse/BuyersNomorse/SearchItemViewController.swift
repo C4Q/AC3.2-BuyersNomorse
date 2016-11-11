@@ -14,8 +14,10 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchTextField: UITextField!
     
+    @IBOutlet weak var ebayLogoImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.ebayLogoImageView.image = #imageLiteral(resourceName: "ebay-logo-Transparent-download-png")
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
@@ -32,6 +34,7 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "SegueToResultsViewController" {
             if let destinationVC = segue.destination as? ResultsViewController {
                 destinationVC.searchedItem = searchItem
+                destinationVC.title = "Results for: \(String(searchItem.characters.first!).capitalized + String(searchItem.characters.dropFirst()))"
             }
         }
     }
