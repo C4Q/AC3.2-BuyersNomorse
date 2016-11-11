@@ -30,10 +30,6 @@ internal enum searchResultParseError: Error {
     case currentPrice(convertedPrice: [[String : String]])
 }
 
-//"galleryPlusPictureURL": [
-//"http://galleryplus.ebayimg.com/ws/web/182190036074_1_3_1_00000003.jpg"
-//]
-
 class SearchResults {
     let title: String
     let galleryUrl: String?
@@ -41,16 +37,14 @@ class SearchResults {
     let currentPrice: String
     let categoryId: String
     let categoryName: String
-    let galleryPlusPictureUrl: String?
     
-    init(title: String, galleryUrl: String?, viewItemUrl: String, currentPrice: String, categoryId: String, categoryName: String, galleryPlusPictureUrl: String?) {
+    init(title: String, galleryUrl: String?, viewItemUrl: String, currentPrice: String, categoryId: String, categoryName: String) {
         self.title = title
         self.galleryUrl = galleryUrl
         self.viewItemUrl = viewItemUrl
         self.currentPrice = currentPrice
         self.categoryId = categoryId
         self.categoryName = categoryName
-        self.galleryPlusPictureUrl = galleryPlusPictureUrl
     }
     
     static func getDataFromJson(data: Data) -> [SearchResults]? {
@@ -60,7 +54,7 @@ class SearchResults {
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
             
             guard let response = jsonData as? [String: AnyObject] else {
-                throw jsonSerialization.response(jsonData: jsonData as Any)
+                throw jsonSerialization.response(jsonData: jsonData)
             }
             guard let findItemsAdvancedResponse = response["findItemsAdvancedResponse"] as? [[String: AnyObject]] else {
                 throw jsonSerialization.findItemsAdvancedResponse(response: response)
@@ -118,16 +112,12 @@ class SearchResults {
                 }
                 
                 var galleryUrl: String?
-                var galleryPlusPictureUrl: String?
                 
                 if let galleryUrlArr = itemObject["galleryURL"] as? [AnyObject] {
                     galleryUrl = galleryUrlArr[0] as? String
                 }
-                if let galleryPlusPictureUrlArr = itemObject["galleryPlusPictureURL"] as? [AnyObject] {
-                    galleryPlusPictureUrl = galleryPlusPictureUrlArr[0] as? String
-                }
                 
-                let sr = SearchResults(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName, galleryPlusPictureUrl: galleryPlusPictureUrl)
+                let sr = SearchResults(title: title, galleryUrl: galleryUrl, viewItemUrl: viewItemUrl, currentPrice: currentPrice, categoryId: categoryId, categoryName: categoryName)
                 searchResults.append(sr)
             }
         } catch let jsonSerialization.response(jsonData: jsonData) {
