@@ -48,7 +48,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.92941176470588238" green="0.45490196078431372" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.4549019608" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="WRN-QC-kge" firstAttribute="top" secondItem="viv-Yn-Id1" secondAttribute="bottom" constant="35" id="APp-L9-3os"/>
                             <constraint firstItem="WRN-QC-kge" firstAttribute="centerX" secondItem="8pS-oh-WIp" secondAttribute="centerX" id="G5u-Ie-dy4"/>
@@ -326,6 +326,10 @@
                             <constraint firstItem="ZrL-Hc-MSd" firstAttribute="leading" secondItem="p1b-JR-k60" secondAttribute="leadingMargin" id="w7u-ED-ThJ"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Back" id="71K-0Z-RFx"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="alternativeItemsHeader" destination="wwg-tD-bo2" id="lPK-Dp-TaB"/>
                         <outlet property="collectionView" destination="mkt-Io-aeE" id="wKv-dR-P0u"/>
@@ -389,9 +393,10 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ss1-UW-E8k" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="d7U-Yf-qsN">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="d7U-Yf-qsN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.97647058819999999" green="0.86666666670000003" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
