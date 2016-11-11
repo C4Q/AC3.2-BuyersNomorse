@@ -10,5 +10,12 @@ import UIKit
 
 class AlternativeChoicesCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var popoverButton: UIButton!
+
+
     @IBOutlet weak var alternativeItemImageView: UIImageView!
+    
+
+    
+    
 }
