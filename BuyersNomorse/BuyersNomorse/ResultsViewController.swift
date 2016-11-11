@@ -193,6 +193,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return cell
     }
     
+    
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -206,14 +208,14 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         destinationVC.customerSelection = itemSelected
         //Trying to format the price into US Currency format
-        var currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
+        let currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
         //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.locale = Locale(identifier: "en_us")
         
         if let result = numberFormatter.string(from: currentPrice) {
-            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(result)"
+            destinationVC.alternativeItemHeaderText = "Other Items @ \(result)"
         }
         destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
         if let image = itemSelected.galleryUrl {
