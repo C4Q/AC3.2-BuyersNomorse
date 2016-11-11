@@ -84,6 +84,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         default:
             break
         }
+        self.tableView.reloadData()
     }
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
