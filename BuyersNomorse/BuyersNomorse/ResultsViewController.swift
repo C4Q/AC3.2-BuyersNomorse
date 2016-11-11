@@ -206,7 +206,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         destinationVC.customerSelection = itemSelected
         //Trying to format the price into US Currency format
-        var currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
+        let currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
         //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
