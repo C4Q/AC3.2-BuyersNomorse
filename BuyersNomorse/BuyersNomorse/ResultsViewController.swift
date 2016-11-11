@@ -193,6 +193,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return cell
     }
     
+    
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -213,7 +215,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         numberFormatter.locale = Locale(identifier: "en_us")
         
         if let result = numberFormatter.string(from: currentPrice) {
-            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(result)"
+            destinationVC.alternativeItemHeaderText = "Other Items @ \(result)"
         }
         destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
         if let image = itemSelected.galleryUrl {
