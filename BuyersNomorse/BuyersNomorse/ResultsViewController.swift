@@ -13,6 +13,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBOutlet weak var minPriceTextField: UITextField!
     @IBOutlet weak var maxPriceTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var errorLabel: UILabel!
     var minPrice: String?
@@ -42,23 +43,23 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         loadData()
     }
     
-
-/* New sort method below */
-//    func sortSmallestToLargest {
-//        let unsortedItems = SearchResults.getDataFromJson(data: validData)
-//        self.items = unsortedItems?.sorted { (a, b) -> Bool in
-//            
-//            var isSmaller = false
-//            let aPrice: Double? = Double(a.currentPrice)
-//            let bPrice: Double? = Double(b.currentPrice)
-//            
-//            if let aP = aPrice, let bP = bPrice {
-//                isSmaller = aP < bP
-//            }
-//            return isSmaller
-//        }
-//
-//    }
+    
+    /* New sort method below */
+    //    func sortSmallestToLargest {
+    //        let unsortedItems = SearchResults.getDataFromJson(data: validData)
+    //        self.items = unsortedItems?.sorted { (a, b) -> Bool in
+    //
+    //            var isSmaller = false
+    //            let aPrice: Double? = Double(a.currentPrice)
+    //            let bPrice: Double? = Double(b.currentPrice)
+    //
+    //            if let aP = aPrice, let bP = bPrice {
+    //                isSmaller = aP < bP
+    //            }
+    //            return isSmaller
+    //        }
+    //
+    //    }
     
     func loadData() {
         APIRequestManager.manager.getData(endPoint: self.endpoint) { (data: Data?) in
@@ -72,6 +73,19 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         print("The endpoint is currently \(self.endpoint)")
     }
     
+    @IBAction func indexChanged(_ sender: AnyObject) {
+        switch sortSegmentedControl.selectedSegmentIndex {
+        case 0:
+            print("Ascending Selected")
+            sortSmallestToLargest()
+        case 1:
+            print("Descending Selected")
+            sortLargestToSmallest()
+        default:
+            break
+        }
+        self.tableView.reloadData()
+    }
     @IBAction func minPriceChanged(_ sender: UITextField) {
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
@@ -92,6 +106,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.items = items?.sorted(by: { (a, b) -> Bool in
             guard let aPrice = Double(a.currentPrice),
                 let bPrice = Double(b.currentPrice) else { return true }
+            print(aPrice, bPrice)
             return aPrice < bPrice
         })
     }
@@ -104,7 +119,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         })
     }
     
-
+    
     func minMaxAreAcceptableAnswers() -> Bool {
         var minPDouble: Double?
         var maxPDouble: Double?
@@ -153,7 +168,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         errorLabel.isHidden = true
         loadData()
-
+        
     }
     
     // MARK: - TABLEVIEW
@@ -173,10 +188,17 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         let item = itemsExists[indexPath.row]
         
         cell.itemTitleLabel.text = item.title
-        var currentPrice = item.currentPrice
-        currentPrice.insert("$", at: currentPrice.startIndex)
-        cell.itemPriceLabel.text = currentPrice
         
+        //Trying to format the price into US Currency format
+        //Source (Lines 194-200): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
+        let currentPrice = NSDecimalNumber(string: item.currentPrice)
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale(identifier: "en_us")
+        if let result = numberFormatter.string(from: currentPrice) {
+            cell.itemPriceLabel.text = result
+        }
+    
         //Loads Image Async
         if let image = item.galleryUrl {
             APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
@@ -193,6 +215,12 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         return cell
     }
     
+    //Deselects selected row after return from Alternative Choices View Controller
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -205,16 +233,17 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                 return
         }
         destinationVC.customerSelection = itemSelected
+        
         //Trying to format the price into US Currency format
+        //Source (Lines 239-245): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let currentPrice = NSDecimalNumber(string: itemSelected.currentPrice)
-        //Source (Lines 207-211): http://stackoverflow.com/questions/39458003/swift-3-and-numberformatter-currency-
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.locale = Locale(identifier: "en_us")
-        
         if let result = numberFormatter.string(from: currentPrice) {
-            destinationVC.alternativeItemHeaderText = "Other Items That Cost \(result)"
+            destinationVC.alternativeItemHeaderText = "Other Items @ \(result)"
         }
+        
         destinationVC.alternativeItemImageURLString = itemSelected.viewItemUrl
         if let image = itemSelected.galleryUrl {
             APIRequestManager.manager.getData(endPoint: image) { (data: Data?) in
@@ -223,7 +252,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                     DispatchQueue.main.async {
                         
                         destinationVC.itemImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
-                        //
                         cell.setNeedsLayout()
                     }
                 }
