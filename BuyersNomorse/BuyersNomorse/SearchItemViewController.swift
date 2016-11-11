@@ -32,7 +32,6 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "SegueToResultsViewController" {
             if let destinationVC = segue.destination as? ResultsViewController {
                 destinationVC.searchedItem = searchItem
-                destinationVC.title = "Results for: \(String(searchItem.characters.first!).capitalized + String(searchItem.characters.dropFirst()))"
             }
         }
     }
