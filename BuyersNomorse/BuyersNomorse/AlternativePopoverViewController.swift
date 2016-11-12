@@ -10,28 +10,30 @@ import UIKit
 
 class AlternativePopoverViewController: UIViewController, UIPopoverControllerDelegate {
     
-    @IBOutlet weak var imageButton: UIButton!
+    @IBOutlet weak var alternativeImageButton: UIButton!
     
     @IBOutlet weak var alternativeItemNameLabel: UILabel!
     @IBOutlet weak var alternativeItemPriceLabel: UILabel!
     
+    @IBOutlet weak var alternativeCategoryLabel: UILabel!
     var itemImage: String?
     
     
     var alternativeItem: SearchResults?
+  
     
-    @IBAction func alternativeItemImageButtonTapped(_ sender: UIButton) {
+    @IBAction func alternativeImageButtonTapped(_ sender: UIButton) {
         if let alternativeItemURL = URL(string: (alternativeItem?.viewItemUrl)!) {
             UIApplication.shared.open(alternativeItemURL)
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
        
         alternativeItemNameLabel.text = alternativeItem?.title
+        alternativeCategoryLabel.text = "Category: \((alternativeItem?.categoryName)!)"
         
         if let itemPrice = alternativeItem?.currentPrice {
             //Returns properly formatted currency
@@ -44,7 +46,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
             }
         }
         
-        guard let alternativeItemsExists = alternativeItem else { return }
+      guard let alternativeItemsExists = alternativeItem else { return }
         
         if let plusImage = alternativeItemsExists.galleryPlusPictureUrl {
             itemImage = plusImage
@@ -59,20 +61,20 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
                 if  let validData = data,
                     let validImage = UIImage(data: validData) {
                     DispatchQueue.main.async {
-                        self.imageButton.setBackgroundImage(validImage, for: UIControlState.normal)
+                        self.alternativeImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
                     }
                 }
                 
             }
         }
-    }
-    
+   }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
     func prepareForReuse() {
-        self.imageButton.imageView?.image = nil
+        //self.imageButton.imageView?.image = nil
     }
     
     

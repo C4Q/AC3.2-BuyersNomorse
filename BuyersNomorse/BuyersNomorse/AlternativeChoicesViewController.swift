@@ -16,8 +16,11 @@ fileprivate func randomCatogoryGenerator() -> String {
 
 
 import UIKit
+import FBSDKLoginKit
+import FBSDKShareKit
 
-class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate{
+
+class AlternativeChoicesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIPopoverPresentationControllerDelegate {
     
     
     @IBOutlet weak var itemNameLabel: UILabel!
@@ -32,9 +35,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
         }
     }
     
-    
-    
-    //var alternativeItemSelected: SearchResults?
+   
     var alternativeItemHeaderText = ""
     var alternativeItemImageURLString = ""
     var customerSelection: SearchResults!
@@ -63,6 +64,23 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
             }
         }
         print("The alternative endpoint is currently \(self.alternativeEndpoint)")
+        
+        //http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-post-message-and.html
+        //Creates share button
+        let urlImage = NSURL(string: (self.alternativeItemImageURLString))
+        
+        let content = FBSDKShareLinkContent()
+        content.contentTitle = customerSelection.title
+        content.imageURL = urlImage as URL!
+        
+        let shareButton = FBSDKShareButton()
+        shareButton.center = CGPoint(x: view.center.x, y: 315)
+        shareButton.shareContent = content
+        view.addSubview(shareButton)
+        
+        
+      
+        
     }
     
     // MARK: - Navigation
@@ -128,6 +146,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
+    
 }
 
 

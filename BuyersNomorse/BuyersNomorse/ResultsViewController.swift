@@ -15,6 +15,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var priceFilterButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     var minPrice: String?
     var maxPrice: String?
@@ -40,7 +41,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor(red:0.29, green:0.44, blue:0.55, alpha:1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red:0.45, green:0.82, blue:0.30, alpha:1.0)
+        priceFilterButton.layer.cornerRadius = 5
         loadData()
     }
     
@@ -77,10 +79,8 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     @IBAction func indexChanged(_ sender: AnyObject) {
         switch sortSegmentedControl.selectedSegmentIndex {
         case 0:
-            print("Ascending Selected")
             sortSmallestToLargest()
         case 1:
-            print("Descending Selected")
             sortLargestToSmallest()
         default:
             break
@@ -91,17 +91,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
     }
     @IBAction func maxPriceChanged(_ sender: UITextField) {
     }
-    //    func sortItems(arrItems: [SearchResults]) -> [SearchResults] {
-    //
-    ////        for i in 0..<arrItems.count {
-    ////            if arrItems[i]
-    ////        }t
-    //        var newArray = arrItems.sorted { (a, b) -> Bool in
-    //            Int(a.currentPrice)! < Int(b.currentPrice)!
-    //        }
-    //
-    //        return newArray
-    //    }
+   
     
     func sortSmallestToLargest() {
         self.items = items?.sorted(by: { (a, b) -> Bool in
