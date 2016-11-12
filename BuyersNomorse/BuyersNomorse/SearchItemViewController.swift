@@ -3,7 +3,7 @@
 //  BuyersNomorse
 //
 //  Created by Sabrina Ip on 11/8/16.
-//  Copyright © 2016 Sabrina, Shashi. All rights reserved.
+//  Copyright © 2016 Sabrina, Shashi, Erica. All rights reserved.
 //
 
 import UIKit
@@ -18,7 +18,9 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var ebayLogoImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.ebayLogoImageView.image = #imageLiteral(resourceName: "logopng")
+
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
