@@ -30,11 +30,18 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        alternativeItemNameLabel.text = alternativeItem?.categoryName
+       
+        alternativeItemNameLabel.text = alternativeItem?.title
         
         if let itemPrice = alternativeItem?.currentPrice {
-            alternativeItemPriceLabel.text = ("$ \(itemPrice)")
+            //Returns properly formatted currency
+            let currentPrice = NSDecimalNumber(string: itemPrice)
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .currency
+            numberFormatter.locale = Locale(identifier: "en_us")
+            if let result = numberFormatter.string(from: currentPrice) {
+                alternativeItemPriceLabel.text = result
+            }
         }
         
         guard let alternativeItemsExists = alternativeItem else { return }
