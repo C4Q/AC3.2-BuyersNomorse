@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--BuyersNomorse Database-->
+        <!--!impulseSearch-->
         <scene sceneID="4aH-rl-C7N">
             <objects>
                 <viewController id="nrK-uZ-Mce" customClass="SearchItemViewController" customModule="BuyersNomorse" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,13 +29,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fI8-RW-cWb">
-                                <color key="backgroundColor" red="0.24313725489999999" green="0.46274509800000002" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.025443905964493752" green="0.23149925470352173" blue="0.40174096822738647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="66" id="16f-e7-X5s"/>
                                     <constraint firstAttribute="height" constant="30" id="nj1-nc-bJB"/>
                                 </constraints>
                                 <state key="normal" title="Search">
-                                    <color key="titleColor" red="1" green="0.92549019610000005" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.45457494259999998" green="0.81856161360000002" blue="0.29701843859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="searchButtonTapped:" destination="nrK-uZ-Mce" eventType="touchUpInside" id="E2S-Vz-3Fa"/>
@@ -43,8 +43,8 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WRN-QC-kge">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="ClW-SL-nsH"/>
-                                    <constraint firstAttribute="height" constant="128" id="WWL-q3-J4O"/>
+                                    <constraint firstAttribute="width" constant="150" id="ClW-SL-nsH"/>
+                                    <constraint firstAttribute="height" constant="150" id="WWL-q3-J4O"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -53,12 +53,12 @@
                             <constraint firstItem="WRN-QC-kge" firstAttribute="top" secondItem="viv-Yn-Id1" secondAttribute="bottom" constant="35" id="APp-L9-3os"/>
                             <constraint firstItem="WRN-QC-kge" firstAttribute="centerX" secondItem="8pS-oh-WIp" secondAttribute="centerX" id="G5u-Ie-dy4"/>
                             <constraint firstItem="fI8-RW-cWb" firstAttribute="centerX" secondItem="8pS-oh-WIp" secondAttribute="centerX" id="GDP-O4-Yo1"/>
-                            <constraint firstItem="fI8-RW-cWb" firstAttribute="top" secondItem="k3r-OY-LBf" secondAttribute="bottom" constant="8" id="Qbd-b4-zYA"/>
+                            <constraint firstItem="fI8-RW-cWb" firstAttribute="top" secondItem="k3r-OY-LBf" secondAttribute="bottom" constant="12" id="Qbd-b4-zYA"/>
                             <constraint firstItem="k3r-OY-LBf" firstAttribute="top" secondItem="WRN-QC-kge" secondAttribute="bottom" constant="8" id="nxg-bO-Wg5"/>
                             <constraint firstItem="k3r-OY-LBf" firstAttribute="centerX" secondItem="8pS-oh-WIp" secondAttribute="centerX" id="p5u-88-KW3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="BuyersNomorse Database" id="2Dg-DO-QAr">
+                    <navigationItem key="navigationItem" title="!impulseSearch" id="2Dg-DO-QAr">
                         <barButtonItem key="backBarButtonItem" title="Search" width="4" id="NXh-9e-Iw8">
                             <color key="tintColor" red="0.28627450980000002" green="0.19215686269999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
@@ -301,12 +301,12 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other items with the same price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwg-tD-bo2">
-                                <color key="backgroundColor" red="0.29019607843137252" green="0.4392156862745098" blue="0.54509803921568623" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.2901960784" green="0.43921568630000002" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3qD-Pb-ylr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="1" green="0.92549019610000005" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

@@ -18,7 +18,7 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var ebayLogoImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.ebayLogoImageView.image = #imageLiteral(resourceName: "ebay-logo-Transparent-download-png")
+        self.ebayLogoImageView.image = #imageLiteral(resourceName: "logopng")
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
