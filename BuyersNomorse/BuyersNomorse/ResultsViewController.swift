@@ -129,7 +129,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         maxPrice = nil
         
         if minPriceTextField.text! != "" {
-            guard let minNum = Double(minPriceTextField.text!) else {
+            guard let minNum = Double(minPriceTextField.text!), minNum > 0 else {
                 errorLabel.text = "The minimum price is not a valid answer"
                 return false
             }
@@ -138,7 +138,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         }
         
         if maxPriceTextField.text! != "" {
-            guard let maxNum = Double(maxPriceTextField.text!) else {
+            guard let maxNum = Double(maxPriceTextField.text!), maxNum > 0 else {
                 errorLabel.text = "The maximum price is not a valid answer"
                 return false
             }
