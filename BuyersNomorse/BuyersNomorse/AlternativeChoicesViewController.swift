@@ -3,7 +3,7 @@
 //  BuyersNomorse
 //
 //  Created by Sabrina Ip on 11/8/16.
-//  Copyright © 2016 Sabrina, Shashi. All rights reserved.
+//  Copyright © 2016 Sabrina, Shashi, Erica. All rights reserved.
 //
 
 fileprivate let catagories = [("antiques", "20081"), ("art","550"), ("baby","2984"), ("books","267"), ("businessAndIndustrial","12576"), ("camerasAndPhoto","625"), ("cellphonesAndAccessories","15032"), ("clothingShoesAndAccessories","11450"),("coinsAndPaperMoney","11116"),("collectibles","1"),("computersTabletsAndNetworking","58058"),("consumerElectronics","293"),("crafts","14339"),("dollsAndBears","237"),("moviesAndDVDs","11232"),("entertainmentMemorabilia","45100"),("everythingElse","99"),("giftCardsAndCoupons","172008"),("healthAndBeauty","26395"), ("homeAndGarden","11700"),("jewelryAndWatches","281"), ("music","11233"),("musicalInstrumentsAndGear","619"),("petSupplies","1281"), (")potteryAndGlass","870"),("realEstate","10542"),("specialtyServices","316"),("sportingGoods","888"),("sportsMemCardsAndFanShop","64482"), ("stamps","260"),("ticketsAndExperiences","1305"),("toysAndHobbies","220"),("travel","3252"),("videoGamesAndConsoles","1249")]

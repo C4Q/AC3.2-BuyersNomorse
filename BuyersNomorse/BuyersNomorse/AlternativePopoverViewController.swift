@@ -3,7 +3,7 @@
 //  BuyersNomorse
 //
 //  Created by Madushani Lekam Wasam Liyanage on 11/10/16.
-//  Copyright © 2016 Sabrina, Shashi. All rights reserved.
+//  Copyright © 2016 Sabrina, Shashi, Erica. All rights reserved.
 //
 
 import UIKit
