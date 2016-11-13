@@ -97,7 +97,6 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         self.items = items?.sorted(by: { (a, b) -> Bool in
             guard let aPrice = Double(a.currentPrice),
                 let bPrice = Double(b.currentPrice) else { return true }
-            print(aPrice, bPrice)
             return aPrice < bPrice
         })
     }
@@ -120,6 +119,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if minPriceTextField.text! != "" {
             guard let minNum = Double(minPriceTextField.text!), minNum > 0 else {
+                errorLabel.isHidden = false
                 errorLabel.text = "The minimum price is not a valid answer"
                 return false
             }
@@ -129,6 +129,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
         
         if maxPriceTextField.text! != "" {
             guard let maxNum = Double(maxPriceTextField.text!), maxNum > 0 else {
+                errorLabel.isHidden = false
                 errorLabel.text = "The maximum price is not a valid answer"
                 return false
             }
@@ -143,21 +144,17 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
             }
         }
         
-        print("min price is \(minPrice)")
-        print("MAX price is \(maxPrice)")
+        errorLabel.text = nil
+        errorLabel.isHidden = true
         return true
     }
     
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        print("min price textfield is showing \(minPriceTextField.text)")
-        print("MAX price textfield is showing \(maxPriceTextField.text)")
         
         guard minMaxAreAcceptableAnswers() else {
-            errorLabel.isHidden = false
             return
         }
-        errorLabel.isHidden = true
         loadData()
         
     }
