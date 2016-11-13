@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FBSDKLoginKit
+import FBSDKShareKit
 
 class AlternativePopoverViewController: UIViewController, UIPopoverControllerDelegate {
     
@@ -67,7 +69,31 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
                 
             }
         }
-   }
+        
+        
+        //http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-post-message-and.html
+        //Creates share button
+        
+        let urlImage = NSURL(string: (self.alternativeItem?.galleryUrl)!)
+        
+        let content = FBSDKShareLinkContent()
+        content.contentTitle = alternativeItem?.title
+        content.imageURL = urlImage as URL!
+        
+        let shareButton = FBSDKShareButton()
+        shareButton.center = CGPoint(x: view.center.x, y: view.center.y+35)
+        shareButton.shareContent = content
+        view.addSubview(shareButton)
+    }
+    
+    
+//    let topEdgeConstraint = NSLayoutConstraint(item: button,
+//                                               attribute: .Top,
+//                                               relatedBy: .Equal,
+//                                               toItem: upperView,
+//                                               attribute: attribute,
+//                                               multiplier: 1.0,
+//                                               constant: 15.0)
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
