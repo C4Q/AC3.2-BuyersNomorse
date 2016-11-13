@@ -59,14 +59,5 @@
         <string>fbauth2</string>
         <string>fbshareextension</string>
     </array>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Our app will allow users to share posts</string>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 </dict>
 </plist>
