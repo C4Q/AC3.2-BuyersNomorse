@@ -27,7 +27,7 @@ class SearchItemViewController: UIViewController, UITextFieldDelegate, FBSDKLogi
         
         //http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-create-facebook.html
         let loginButton = FBSDKLoginButton()
-        loginButton.center = CGPoint(x: view.center.x, y: 650)
+        loginButton.center = CGPoint(x: view.center.x, y: 355)
         view.addSubview(loginButton)
         loginButton.delegate = self
 
