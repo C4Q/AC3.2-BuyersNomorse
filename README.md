@@ -183,7 +183,7 @@ We're going to need this nifty [Objective-C -> Swift Converter](https://objectiv
 ### Going through eBay's API
 
 1. Register for an eBay developer account here: http://developer.ebay.com/join
-2. You will need a production key, which can be requested here: http://developer.ebay.com/my/keys. Save to App ID (Client ID) to be used for later.
+2. You will need a production key, which can be requested here: http://developer.ebay.com/my/keys. Save the App ID (Client ID) to be used for later.
 3. Now, find the API you would like to work with. This page categorizes API by types:  https://go.developer.ebay.com/api-documentation.
 4. For this project, we chose an API that can search through eBay’s inventory. Thus, find the heading that says “Searching APIs” where you will see “Finding API” listed.
 5. You will find helpful links for Overview, API Reference, and Release Notes. Click on API Reference (http://developer.ebay.com/Devzone/finding/CallRef/index.html).
