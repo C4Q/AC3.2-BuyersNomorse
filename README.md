@@ -17,6 +17,7 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 * [Link to Getting Started with the Facebook SDK for iOS](https://developers.facebook.com/docs/ios/getting-started/) -> Let's go through the basic setup process together!
 
 **_Where Things Got Real_**
+
 Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDelegate.m:
 
 * Programming in Swift -> AppDelegate.swift (We have no AppDelegate.m)
@@ -41,6 +42,35 @@ Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDeleg
   * Now, we can update `AppDelegate.swift`:
 
 > Side Note: _After_ I already completed most of the processes described above, I found out that there is a [Facebook SDK for Swift](https://developers.facebook.com/docs/swift) that would have probably been so much easier to work with, but I was pretty much done at that point. At least I now have some experience bridging Objective-C and Swift! :)
+
+
+Step 1: Import Kits
+```swift
+import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
+import FBSDKShareKit
+```
+
+Step 2: Update the Following Methods
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+return true
+
+}
+
+func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+return FBSDKApplicationDelegate.sharedInstance().application(app, open: url as URL!, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+}
+
+func applicationDidBecomeActive(_ application: UIApplication) {
+// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+FBSDKAppEvents.activateApp()
+}
+```
+
+  * At this point, the SDK is installed and configured. The easiest way to test this is by using the App Event, **Log App Activations**. We have already done this in the AppDelegate.swift file by calling the activateApp() method on the FBSDKAppEvents class. To check:
 
 
 #### Part 2: Implementing Capabilites and/or Other App Events
