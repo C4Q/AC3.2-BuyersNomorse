@@ -20,6 +20,8 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
     @IBOutlet weak var alternativeCategoryLabel: UILabel!
     var itemImage: String?
     
+  
+    @IBOutlet weak var alternativeImageView: UIImageView!
     
     var alternativeItem: SearchResults?
   
@@ -30,10 +32,11 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        
         alternativeItemNameLabel.text = alternativeItem?.title
         alternativeCategoryLabel.text = "Category: \((alternativeItem?.categoryName)!)"
         
@@ -63,7 +66,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
                 if  let validData = data,
                     let validImage = UIImage(data: validData) {
                     DispatchQueue.main.async {
-                        self.alternativeImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
+                        self.alternativeImageView.image = validImage
                     }
                 }
                 
@@ -81,7 +84,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
         content.imageURL = urlImage as URL!
         
         let shareButton = FBSDKShareButton()
-        shareButton.center = CGPoint(x: view.center.x - 95, y: view.center.y + 8)
+        shareButton.center = CGPoint(x: views, y: view.center.y + 8)
         shareButton.shareContent = content
         view.addSubview(shareButton)
         
