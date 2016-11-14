@@ -4,17 +4,15 @@ An app that does stuff related to price comparison.
 
 ## Erica
 
-### Facebook Integration
+### NSUserDefaults
 
-Goal: Allow users to sign-in and share interesting findings with friends.
-
-#### Part 1: Configuring the Facebook SDK for iOS 
-
-* SDK == Software Developer Kit
-* A set of frameworks that allow us to _“easily”_ integrate our apps with Facebook
-//What are frameworks?
-* “Link to Getting Started with the Facebook SDK for iOS” == (https://developers.facebook.com/docs/ios/getting-started/)
-
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
+do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa
+qui officia deserunt mollit anim id est laborum.
 
 ## Sabrina
 
@@ -32,10 +30,10 @@ I learned to collaborate and communicate with others in using git, and in genera
 
 ## Shashi
 
-### Popover View and More Git
+### API endpoints
 
-We wanted to show an enlarged view of the items in our collection view without directing the user to another view controller, so we got the idea of using a popover view from Instagram. It was challenging to create a popover segue from a dynamic collection view item, however I was able to figure it out after struggling a good amount of time. It was very exciting to integrate a tool that we haven’t still learned in class!
-
-I worked on getting the segues to work with the data from the previous view controller(sender) as well as creating functions to organize data. We went through a lot of debugging to get the correct data in to our app. I also created the logo for our app with the ideas of my teammates. This turned out to be the most successful project I have worked on so far.
-
-Another very important thing I learned from this project is how to deal with git merge conflicts. I can say I am more confident on git now than ever!
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+accusantium doloremque laudantium, totam rem aperiam, eaque ipsa 
+quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt 
+explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
