@@ -4,7 +4,6 @@ A shopping app called “!impulse” that gives you alternative buying choices f
 
 ## Erica
 
-<<<<<<< HEAD
 ### Facebook Integration
 
 Goal: Allow users to sign-in and share interesting findings with friends.
@@ -178,17 +177,6 @@ We're going to need this nifty [Objective-C -> Swift Converter](https://objectiv
 #### Other Resources
 * [Quickstart Link for Facebook SDK Integration] (https://developers.facebook.com/quickstarts/?platform=ios)
 * [More Info on Facebook Analytics](https://developers.facebook.com/docs/analytics)
-=======
-### NSUserDefaults
->>>>>>> 6daab556b02f33234e67244248da7ec288bc18b2
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
-do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa
-qui officia deserunt mollit anim id est laborum.
 
 ## Sabrina
 
