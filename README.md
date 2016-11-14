@@ -201,6 +201,6 @@ We're going to need this nifty [Objective-C -> Swift Converter](https://objectiv
 
 We wanted to show an enlarged view of the items in our collection view without directing the user to another view controller, so we got the idea of using a popover view from Instagram. It was challenging to create a popover segue from a dynamic collection view item, however I was able to figure it out after struggling a good amount of time. It was very exciting to integrate a tool that we haven’t still learned in class!
 
-I worked on getting the segues to work with the data from the previous view controller(sender) as well as creating functions to organize data. We went through a lot of debugging to get the correct data in to our app. I also created the logo for our app with the ideas of my teammates. This turned out to be the most successful project I have worked on so far.
+I worked on getting the segues to work with the data from the previous view controller(sender) as well as creating functions to organize data. We went through a lot of debugging to get the correct data in to our app. I also created the logo for our app with the ideas of my teammates.(http://editor.freelogodesign.org/?lang=EN) This turned out to be the most successful project I have worked on so far.
 
 Another very important thing I learned from this project is how to deal with git merge conflicts. I can say I am more confident on git now than ever!
