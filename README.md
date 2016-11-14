@@ -12,10 +12,33 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 
 * SDK == Software Developer Kit
 * A set of frameworks that allow us to _“easily”_ integrate our apps with Facebook
-  * "A framework is a hierarchial directory that encapsulates shared resources in a single package" 
-  * Examples of shared resources include: shared library, nib files, image files, localized strings, header files, and reference documentation 
-  * [More on Frameworks](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html)
-* [Link to Getting Started with the Facebook SDK for iOS](https://developers.facebook.com/docs/ios/getting-started/)
+  * "A framework is a hierarchial directory that encapsulates shared resources in a single package" (Source: [More on Frameworks](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html))
+  * Examples of Shared Resources: shared library, nib files, image files, localized strings, header files, and reference documentation 
+* [Link to Getting Started with the Facebook SDK for iOS](https://developers.facebook.com/docs/ios/getting-started/) -> Let's go through the basic setup process together!
+
+**_Where Things Got Real_**
+Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDelegate.m:
+
+* Programming in Swift -> AppDelegate.swift (We have no AppDelegate.m)
+* Why?: “The simple answer is that AppDelegate.swift is just a translation from AppDelegate.h and AppDelegate.m, as Swift does not require separate headers & implementations” (Source: (http://stackoverflow.com/questions/30388064/how-does-appdelegate-swift-replace-appdelegate-h-and-appdelegate-m-in-xcode-6-3))
+* Workaround: Create a Swift Bridging Header File & add it to Target’s Build Settings
+  * A Swift bridging header allows you to communicate with Obj-C classes from Swift classes. Needed if your (Swift) program utilizes Obj-C
+  * [Quick & Dirty Resource For How to Create a Bridging Header File](http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/)
+  * Once this step is complete, you will be able to access all of the APIs in the Facebook SDK in our comfy Swift language/file system
+  * This is the source code we used in our Bridging-Header.h file:
+
+```
+#ifndef Bridging_Header_h
+#define Bridgin_Header_h
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+#import <Bolts/Bolts.h>
+
+#endif /* Bridging_Header_h */
+```
+
 
 #### Part 2: Implementing Capabilites and/or Other App Events
 
