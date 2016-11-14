@@ -239,7 +239,7 @@ class ResultsViewController: UIViewController, UITextFieldDelegate, UITableViewD
                     let validImage = UIImage(data: validData) {
                     DispatchQueue.main.async {
                         
-                        destinationVC.itemImageButton.setBackgroundImage(validImage, for: UIControlState.normal)
+                        destinationVC.chosenImageView.image = validImage
                         cell.setNeedsLayout()
                     }
                 }
