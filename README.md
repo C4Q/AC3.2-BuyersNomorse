@@ -20,7 +20,7 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDelegate.m:
 
 * Programming in Swift -> AppDelegate.swift (We have no AppDelegate.m)
-* Why?: “The simple answer is that AppDelegate.swift is just a translation from AppDelegate.h and AppDelegate.m, as Swift does not require separate headers & implementations” (Source: (http://stackoverflow.com/questions/30388064/how-does-appdelegate-swift-replace-appdelegate-h-and-appdelegate-m-in-xcode-6-3))
+* Why?: “The simple answer is that AppDelegate.swift is just a translation from AppDelegate.h and AppDelegate.m, as Swift does not require separate headers & implementations” ([Source](http://stackoverflow.com/questions/30388064/how-does-appdelegate-swift-replace-appdelegate-h-and-appdelegate-m-in-xcode-6-3))
 * Workaround: Create a Swift Bridging Header File & add it to Target’s Build Settings
   * A Swift bridging header allows you to communicate with Obj-C classes from Swift classes. Needed if your (Swift) program utilizes Obj-C
   * [Quick & Dirty Resource For How to Create a Bridging Header File](http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/)
