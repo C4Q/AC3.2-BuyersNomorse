@@ -133,6 +133,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     }
     
     
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "PopoverViewSegue" {
@@ -141,6 +142,10 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
                 
                 let vc = segue.destination
                 let controller = vc.popoverPresentationController
+                controller?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+                controller?.sourceView = self.view
+                controller?.sourceRect = CGRect(x: self.view.layer.bounds.width * 0.5, y: self.view.layer.bounds.height * 0.5, width: 0.0, height: 0.0)
+                vc.preferredContentSize=CGSize(width: 250, height: 400)
                 if controller != nil {
                     controller?.delegate = self
                 }
