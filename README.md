@@ -12,9 +12,9 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 
 * SDK == Software Developer Kit
 * A set of frameworks that allow us to _“easily”_ integrate our apps with Facebook
-   "A framework is a hierarchial directory that encapsulates shared resources in a single package" 
+  * "A framework is a hierarchial directory that encapsulates shared resources in a single package" 
   * Examples of shared resources include: shared library, nib files, image files, localized strings, header files, and reference documentation 
-  * [Apple's Take on Frameworks](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html)
+  * [More on Frameworks](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html)
 * [Link to Getting Started with the Facebook SDK for iOS](https://developers.facebook.com/docs/ios/getting-started/)
 
 #### Part 2: Implementing Capabilites and/or Other App Events
