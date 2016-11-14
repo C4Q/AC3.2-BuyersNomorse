@@ -71,13 +71,114 @@ FBSDKAppEvents.activateApp()
 ```
 
   * At this point, the SDK is installed and configured. The easiest way to test this is by using the App Event, **Log App Activations**. We have already done this in the AppDelegate.swift file by calling the activateApp() method on the FBSDKAppEvents class. To check:
+    * Compile & Run App
+    * Go to the [Analytics for Apps Dashboard](https://www.facebook.com/analytics/373837896292654/) & select your app
+    * From the menu on the left, select Activity -> Events
 
 
 #### Part 2: Implementing Capabilites and/or Other App Events
 
+Example 1: Login with Facebook
+
+In the view controller that you wish to display the login button, simply add the following inside of `viewDidLoad()`. (Don't forget to import `FBSDKLoginKit!`):
+```swift
+import UIKit
+import FBSDKLoginKit
+
+class ViewController: UIViewController {
+
+override func viewDidLoad() {
+super.viewDidLoad()
+
+let loginButton = FBSDKLoginButton()
+loginButton.center = view.center
+view.addSubview(loginButton)
+}
+
+override func didReceiveMemoryWarning() {
+super.didReceiveMemoryWarning()
+}
+}
+```
+[Source](http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-create-facebook.html)
+
+Yay! At this point, you should be able to log in to Facebook from your app. However, I noticed that the prompt on the login did not change after my credentials were authenticated. I was logged in, but the button still said, "Log in with Facebook". To fix this, implement the following delegate methods & set your button delegate:
+
+```swift
+class ViewController: UIViewController, FBSDKLoginButtonDelegate {
+
+override func viewDidLoad() {
+//...        
+loginButton.delegate = self
+}
+
+func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+print("Did log out of facebook")
+}
+
+func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+if error != nil {
+print(error)
+return
+}
+
+print("Successfully logged in with facebook...")
+}
+}
+```
+[Source](https://videos.letsbuildthatapp.com/playlist/Firebase-Social-Login/video/Facebook-Authentication-and-Cocoapods)
+
+Your login in button should now prompt you to Log Out once are successfully authenticated. 
+
+Example 2: Add Sharing Capabilites
+
+In the view controller you wish to add the Facebook Share Button to, add the following to the viewDidLoad() method and import the Kits below: 
+
+```swift
+import UIKit
+import FBSDKLoginKit
+import FBSDKShareKit
+
+class ViewController: UIViewController{
+
+override func viewDidLoad() {
+super.viewDidLoad()
+
+let urlImage = NSURL(string: "https://upload.wikimedia.org/wikipedia/commons/0/0e/THSR_700T_Modern_High_Speed_Train.jpg")
+
+let imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
+imageView.center = CGPoint(x: view.center.x, y: 200)
+imageView.image = UIImage(data: NSData(contentsOfURL: urlImage!)!)
+imageView.contentMode = UIViewContentMode.ScaleAspectFit
+view.addSubview(imageView)
+
+let content = FBSDKShareLinkContent()
+content.contentTitle = "Taiwan High Speed Rail. Posted with my iOS App."
+content.imageURL = urlImage
+
+let shareButton = FBSDKShareButton()
+shareButton.center = CGPoint(x: view.center.x, y: 500)
+shareButton.shareContent = content
+view.addSubview(shareButton)
+}
+
+override func didReceiveMemoryWarning() {
+super.didReceiveMemoryWarning()
+}
+
+}
+```
+[Source](http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-post-message-and.html)
+
+Example 3: Add Like Button
+
+Instead of using a tutorial, let's do this one straight from [Facebook's Developer Site](https://developers.facebook.com/docs/sharing/ios/like-button)
+
+We're going to need this nifty [Objective-C -> Swift Converter](https://objectivec2swift.com/#/home/main)
+
 #### Other Resources
-
-
+* [Quickstart Link for Facebook SDK Integration] (https://developers.facebook.com/quickstarts/?platform=ios)
+* [More Info on Facebook Analytics](https://developers.facebook.com/docs/analytics)
 
 
 ## Sabrina
