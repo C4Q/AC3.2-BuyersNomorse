@@ -37,7 +37,7 @@ Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDeleg
 #import <Bolts/Bolts.h>
 
 #endif /* Bridging_Header_h */
-``
+```
   * Now, we can update `AppDelegate.swift`:
 
 > Side Note: _After_ I already completed most of the processes described above, I found out that there is a [Facebook SDK for Swift](https://developers.facebook.com/docs/swift) that would have probably been so much easier to work with, but I was pretty much done at that point. At least I now have some experience bridging Objective-C and Swift! :)
