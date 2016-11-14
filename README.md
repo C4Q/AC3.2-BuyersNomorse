@@ -20,12 +20,12 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDelegate.m:
 
 * Programming in Swift -> AppDelegate.swift (We have no AppDelegate.m)
-* Why?: “The simple answer is that AppDelegate.swift is just a translation from AppDelegate.h and AppDelegate.m, as Swift does not require separate headers & implementations” ([Source](http://stackoverflow.com/questions/30388064/how-does-appdelegate-swift-replace-appdelegate-h-and-appdelegate-m-in-xcode-6-3))
-* Workaround: Create a Swift Bridging Header File & add it to Target’s Build Settings
+* Why?: “The simple answer is that AppDelegate.swift is just a translation from AppDelegate.h and AppDelegate.m, as Swift does not require separate headers & implementations” (Source: [StackOverflow](http://stackoverflow.com/questions/30388064/how-does-appdelegate-swift-replace-appdelegate-h-and-appdelegate-m-in-xcode-6-3))
+* **_Workaround:_ Create a Swift Bridging Header File & add it to Target’s Build Settings**
   * A Swift bridging header allows you to communicate with Obj-C classes from Swift classes. Needed if your (Swift) program utilizes Obj-C
   * [Quick & Dirty Resource For How to Create a Bridging Header File](http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/)
   * Once this step is complete, you will be able to access all of the APIs in the Facebook SDK in our comfy Swift language/file system
-  * This is the source code we used in our Bridging-Header.h file:
+  * This is the source code we used in our `Bridging-Header.h` file:
 
 ```
 #ifndef Bridging_Header_h
@@ -37,7 +37,10 @@ Step 5: Connecting App Delegate to FBSDKApplication Delegate Object via AppDeleg
 #import <Bolts/Bolts.h>
 
 #endif /* Bridging_Header_h */
-```
+``
+  * Now, we can update `AppDelegate.swift`:
+
+> Side Note: _After_ I already completed most of the processes described above, I found out that there is a [Facebook SDK for Swift](https://developers.facebook.com/docs/swift) that would have probably been so much easier to work with, but I was pretty much done at that point. At least I now have some experience bridging Objective-C and Swift! :)
 
 
 #### Part 2: Implementing Capabilites and/or Other App Events
