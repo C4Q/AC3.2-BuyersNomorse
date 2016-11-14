@@ -182,15 +182,18 @@ We're going to need this nifty [Objective-C -> Swift Converter](https://objectiv
 
 ### Going through eBay's API
 
-My biggest contribution to this project was figuring our eBay’s JSON data. EBay has many different data sets, depending on which API the user calls.  We started this project with one set of JSON data that was easily found (FindPopularItems) - but it did not contain the information/parameters we needed (the ability to filter by min and max prices). I was insistent that we continue looking for the right JSON data instead of changing our project, because I knew that if the function could be performed on eBay’s website, we should be able to find data on it.
+1. Register for an eBay developer account here: http://developer.ebay.com/join
+2. You will need a production key, which can be requested here: http://developer.ebay.com/my/keys. Save to App ID (Client ID) to be used for later.
+3. Now, find the API you would like to work with. This page categorizes API by types:  https://go.developer.ebay.com/api-documentation.
+4. For this project, we chose an API that can search through eBay’s inventory. Thus, find the heading that says “Searching APIs” where you will see “Finding API” listed.
+5. You will find helpful links for Overview, API Reference, and Release Notes. Click on API Reference (http://developer.ebay.com/Devzone/finding/CallRef/index.html).
+6. You will be taken the the API Reference - Call Index page. For this project, we chose findItemsAdvanced, so that we can find items by minimum and maximum price. Click on the associated Samples link (http://developer.ebay.com/Devzone/finding/CallRef/findItemsAdvanced.html#Samples)
+7. You are given a list of samples of what you can use this API for. We will use the Refining Results with Aspect Filters. Click on the link to take you directly to the sample call (http://developer.ebay.com/Devzone/finding/CallRef/findItemsAdvanced.html#sampleaspectFilter).
+8. We need the code in URL format. Find the line that says “See also the non-wrapped version of this URL.” Click on the link (http://developer.ebay.com/Devzone/finding/CallRef/Samples/findItemsAdvanced_aspectFilter_in_url_xml.txt)
+9. The link gives you the following: http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=YourAppID&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD&itemFilter(0).name=MaxPrice&itemFilter(0).value=75.00&itemFilter(0).paramName=Currency&itemFilter(0).paramValue=USD&itemFilter(1).name=MinPrice&itemFilter(1).value=50.00&itemFilter(1).paramName=Currency&itemFilter(1).paramValue=USD&aspectFilter.aspectName=Megapixels&aspectFilter.aspectValueName=5.0+to+5.9+MP&paginationInput.entriesPerPage=2&categoryId=31388
+10. Replace “YourAppID” with your ID from step 2. Replace the XML in RESPONSE-DATA-FORMAT with JSON. “CategoryId” can be replaced with “keywords,” depending on what you would like to call. Now, you have the basis of your JSON call.
+11. Read through the API Reference Guide for more instructions on using the different parameters.
 
-With research, we found the API call we wanted (findItemsAdvanced) - but it was difficult to find the data in JSON format. It took a whole day’s time of reading through eBay’s API Reference Guide to find the necessary data. The JSON data is hidden under URL format. In the API Reference Guide must click the link that says “See also the non-wrapped version of this URL.” Then, change the parameter RESPONSE-DATA-FORMAT to JSON instead of XML.
-
-I found that going through eBay’ data was not straightforward. It took intuition. For example, the reference guide lists parameters for searching by min and max prices, but not on how to search for one without the other. (Hint: It’s not as simple as removing the unnecessary parameter. The parameter name has to change slightly as well.)
-
-I learned that outside research may be just as helpful as an API guide (such as, finding out the  category ID’s of popular eBay items - for these numbers change frequently). This project also reinforced a lot of previous lessons - such as using UITextField and delegates, as well as error parsing. I practiced initializing computed class variables, as opposed to just using stored properties.
-
-I learned to collaborate and communicate with others in using git, and in general. I learned to read through other people’s code and storyboard, and to learn from their programming and stylistic choices. I was lucky to work on this project with very talented and creative partners. 
 
 ## Shashi
 
