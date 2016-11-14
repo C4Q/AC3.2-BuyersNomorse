@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ss1-UW-E8k">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ss1-UW-E8k">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -289,16 +289,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT4-wp-Gu7">
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="Dew-Ef-Jti"/>
-                                    <constraint firstAttribute="width" constant="150" id="WCJ-Qb-W6D"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="alternativeImageTapped:" destination="fH0-OC-dWm" eventType="touchUpInside" id="I84-Xj-yMq"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other items with the same price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwg-tD-bo2">
                                 <color key="backgroundColor" red="0.13588792085647583" green="0.31501200795173645" blue="0.45632201433181763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -308,12 +298,25 @@
                                 <color key="textColor" red="0.39607843139999999" green="0.79215686269999996" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1iw-BD-2qA"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mT4-wp-Gu7">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Dew-Ef-Jti"/>
+                                    <constraint firstAttribute="width" constant="150" id="WCJ-Qb-W6D"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="alternativeImageTapped:" destination="fH0-OC-dWm" eventType="touchUpInside" id="I84-Xj-yMq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.82745098039999998" green="0.85882352939999995" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="mkt-Io-aeE" firstAttribute="leading" secondItem="p1b-JR-k60" secondAttribute="leading" id="AVo-GX-n9N"/>
+                            <constraint firstItem="1iw-BD-2qA" firstAttribute="bottom" secondItem="mT4-wp-Gu7" secondAttribute="bottom" id="BwM-GF-g1M"/>
+                            <constraint firstItem="1iw-BD-2qA" firstAttribute="trailing" secondItem="mT4-wp-Gu7" secondAttribute="trailing" id="MF9-kH-5Cx"/>
                             <constraint firstItem="ZrL-Hc-MSd" firstAttribute="trailing" secondItem="p1b-JR-k60" secondAttribute="trailingMargin" id="OcC-LE-vau"/>
                             <constraint firstItem="mT4-wp-Gu7" firstAttribute="top" secondItem="ZrL-Hc-MSd" secondAttribute="bottom" constant="8" id="SmW-j5-RIQ"/>
+                            <constraint firstItem="1iw-BD-2qA" firstAttribute="top" secondItem="mT4-wp-Gu7" secondAttribute="top" id="WmT-Y0-QYV"/>
                             <constraint firstAttribute="trailing" secondItem="wwg-tD-bo2" secondAttribute="trailing" id="amR-XX-S01"/>
                             <constraint firstItem="ZrL-Hc-MSd" firstAttribute="top" secondItem="2xB-BV-UdY" secondAttribute="bottom" constant="8" id="dTe-HP-m9a"/>
                             <constraint firstItem="wwg-tD-bo2" firstAttribute="top" secondItem="mT4-wp-Gu7" secondAttribute="bottom" constant="60" id="dcW-h9-fnR"/>
@@ -323,12 +326,14 @@
                             <constraint firstItem="wwg-tD-bo2" firstAttribute="leading" secondItem="p1b-JR-k60" secondAttribute="leading" id="r7Y-oV-MPf"/>
                             <constraint firstItem="t8W-WO-T4G" firstAttribute="top" secondItem="mkt-Io-aeE" secondAttribute="bottom" id="tQ8-36-hNk"/>
                             <constraint firstItem="ZrL-Hc-MSd" firstAttribute="leading" secondItem="p1b-JR-k60" secondAttribute="leadingMargin" id="w7u-ED-ThJ"/>
+                            <constraint firstItem="1iw-BD-2qA" firstAttribute="leading" secondItem="mT4-wp-Gu7" secondAttribute="leading" id="x4t-89-orv"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="alternativeItemsHeader" destination="wwg-tD-bo2" id="lPK-Dp-TaB"/>
+                        <outlet property="chosenImageView" destination="1iw-BD-2qA" id="YC8-Ak-bAE"/>
                         <outlet property="collectionView" destination="mkt-Io-aeE" id="wKv-dR-P0u"/>
                         <outlet property="itemImageButton" destination="mT4-wp-Gu7" id="JdY-PR-iaQ"/>
                         <outlet property="itemNameLabel" destination="ZrL-Hc-MSd" id="p7l-Ut-3FS"/>
@@ -378,9 +383,7 @@
                                 <color key="textColor" red="0.39607843139999999" green="0.79215686269999996" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-UA-Ltm">
-                                <frame key="frameInset" width="375" height="420"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MHQ-UA-Ltm"/>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMi-7W-5yO">
                                 <connections>
                                     <action selector="alternativeImageButtonTapped:" destination="GhZ-zw-EIs" eventType="touchUpInside" id="ZlJ-hc-gt1"/>

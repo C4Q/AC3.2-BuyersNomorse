@@ -29,6 +29,7 @@ class AlternativeChoicesViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var alternativeItemsHeader: UILabel!
     
+    @IBOutlet weak var chosenImageView: UIImageView!
     @IBOutlet weak var itemImageButton: UIButton!
     @IBAction func alternativeImageTapped(_ sender: UIButton) {
         if let alternativeItemLink = URL(string: alternativeItemImageURLString) {
