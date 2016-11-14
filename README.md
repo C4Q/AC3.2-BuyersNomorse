@@ -78,7 +78,7 @@ FBSDKAppEvents.activateApp()
 
 #### Part 2: Implementing Capabilites and/or Other App Events
 
-Example 1: Login with Facebook
+**Example 1: Login with Facebook**
 
 In the view controller that you wish to display the login button, simply add the following inside of `viewDidLoad()`. (Don't forget to import `FBSDKLoginKit!`):
 ```swift
@@ -130,7 +130,7 @@ print("Successfully logged in with facebook...")
 
 Your login in button should now prompt you to Log Out once are successfully authenticated. 
 
-Example 2: Add Sharing Capabilites
+**Example 2: Add Sharing Capabilites**
 
 In the view controller you wish to add the Facebook Share Button to, add the following to the viewDidLoad() method and import the Kits below: 
 
@@ -170,7 +170,7 @@ super.didReceiveMemoryWarning()
 ```
 [Source](http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-post-message-and.html)
 
-Example 3: Add Like Button
+**Example 3: Add Like Button**
 
 Instead of using a tutorial, let's do this one straight from [Facebook's Developer Site](https://developers.facebook.com/docs/sharing/ios/like-button)
 
