@@ -1,6 +1,6 @@
 # Project: Buyers Nomorse
 
-An app that does stuff related to price comparison.
+A shopping app called “!impulse” that gives you alternative buying choices for the price of the item you have searched for.
 
 ## Erica
 
@@ -12,8 +12,16 @@ Goal: Allow users to sign-in and share interesting findings with friends.
 
 * SDK == Software Developer Kit
 * A set of frameworks that allow us to _“easily”_ integrate our apps with Facebook
-//What are frameworks?
-* “Link to Getting Started with the Facebook SDK for iOS” == (https://developers.facebook.com/docs/ios/getting-started/)
+   "A framework is a hierarchial directory that encapsulates shared resources in a single package" 
+  * Examples of shared resources include: shared library, nib files, image files, localized strings, header files, and reference documentation 
+  * [Apple's Take on Frameworks](https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html)
+* [Link to Getting Started with the Facebook SDK for iOS](https://developers.facebook.com/docs/ios/getting-started/)
+
+#### Part 2: Implementing Capabilites and/or Other App Events
+
+#### Other Resources
+
+
 
 
 ## Sabrina
