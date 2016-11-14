@@ -55,18 +55,17 @@ import FBSDKShareKit
 Step 2: Update the Following Methods
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-return true
+    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    return true
 
 }
 
 func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-return FBSDKApplicationDelegate.sharedInstance().application(app, open: url as URL!, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    return FBSDKApplicationDelegate.sharedInstance().application(app, open: url as URL!, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
 }
 
 func applicationDidBecomeActive(_ application: UIApplication) {
-// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-FBSDKAppEvents.activateApp()
+    FBSDKAppEvents.activateApp()
 }
 ```
 
@@ -87,17 +86,17 @@ import FBSDKLoginKit
 
 class ViewController: UIViewController {
 
-override func viewDidLoad() {
-super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-let loginButton = FBSDKLoginButton()
-loginButton.center = view.center
-view.addSubview(loginButton)
-}
+        let loginButton = FBSDKLoginButton()
+        loginButton.center = view.center
+        view.addSubview(loginButton)
+    }
 
-override func didReceiveMemoryWarning() {
-super.didReceiveMemoryWarning()
-}
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }
 ```
 [Source](http://studyswift.blogspot.com/2016/01/facebook-sdk-and-swift-create-facebook.html)
@@ -107,23 +106,22 @@ Yay! At this point, you should be able to log in to Facebook from your app. Howe
 ```swift
 class ViewController: UIViewController, FBSDKLoginButtonDelegate {
 
-override func viewDidLoad() {
-//...        
-loginButton.delegate = self
-}
+    override func viewDidLoad() {
+        //...        
+        loginButton.delegate = self
+    }
 
-func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-print("Did log out of facebook")
-}
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("Did log out of facebook")
+    }
 
-func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-if error != nil {
-print(error)
-return
-}
-
-print("Successfully logged in with facebook...")
-}
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if error != nil {
+            print(error)
+            return
+        }
+        print("Successfully logged in with facebook...")
+    }
 }
 ```
 [Source](https://videos.letsbuildthatapp.com/playlist/Firebase-Social-Login/video/Facebook-Authentication-and-Cocoapods)
@@ -141,30 +139,30 @@ import FBSDKShareKit
 
 class ViewController: UIViewController{
 
-override func viewDidLoad() {
-super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-let urlImage = NSURL(string: "https://upload.wikimedia.org/wikipedia/commons/0/0e/THSR_700T_Modern_High_Speed_Train.jpg")
+        let urlImage = NSURL(string: "https://upload.wikimedia.org/wikipedia/commons/0/0e/THSR_700T_Modern_High_Speed_Train.jpg")
 
-let imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
-imageView.center = CGPoint(x: view.center.x, y: 200)
-imageView.image = UIImage(data: NSData(contentsOfURL: urlImage!)!)
-imageView.contentMode = UIViewContentMode.ScaleAspectFit
-view.addSubview(imageView)
+        let imageView = UIImageView(frame: CGRectMake(0, 0, 200, 200))
+        imageView.center = CGPoint(x: view.center.x, y: 200)
+        imageView.image = UIImage(data: NSData(contentsOfURL: urlImage!)!)
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        view.addSubview(imageView)
 
-let content = FBSDKShareLinkContent()
-content.contentTitle = "Taiwan High Speed Rail. Posted with my iOS App."
-content.imageURL = urlImage
+        let content = FBSDKShareLinkContent()
+        content.contentTitle = "Taiwan High Speed Rail. Posted with my iOS App."
+        content.imageURL = urlImage
 
-let shareButton = FBSDKShareButton()
-shareButton.center = CGPoint(x: view.center.x, y: 500)
-shareButton.shareContent = content
-view.addSubview(shareButton)
-}
+        let shareButton = FBSDKShareButton()
+        shareButton.center = CGPoint(x: view.center.x, y: 500)
+        shareButton.shareContent = content
+        view.addSubview(shareButton)
+    }
 
-override func didReceiveMemoryWarning() {
-super.didReceiveMemoryWarning()
-}
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 
 }
 ```
