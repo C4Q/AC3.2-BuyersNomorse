@@ -84,7 +84,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
         content.imageURL = urlImage as URL!
         
         let shareButton = FBSDKShareButton()
-        shareButton.center = CGPoint(x: view.center.x - 95, y: view.center.y + 8)
+        shareButton.center = CGPoint(x: view.center.x - 120, y: view.center.y + 8)
         shareButton.shareContent = content
         view.addSubview(shareButton)
         
@@ -92,7 +92,7 @@ class AlternativePopoverViewController: UIViewController, UIPopoverControllerDel
         let likeButton = FBSDKLikeControl()
         likeButton.objectID = alternativeItemsExists.viewItemUrl
         likeButton.likeControlStyle = .boxCount
-        likeButton.center = CGPoint(x: view.center.x - 15, y: view.center.y + 8)
+        likeButton.center = CGPoint(x: view.center.x - 40, y: view.center.y + 8)
         self.view.addSubview(likeButton)
     }
     
